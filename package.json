@@ -1,0 +1,27 @@
+{
+  "name": "binge-admin",
+  "version": "1.0.0",
+  "description": "Binge Admin panel",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binge-plus/BINGE-ADMIN.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/binge-plus/BINGE-ADMIN/issues"
+  },
+  "homepage": "https://github.com/binge-plus/BINGE-ADMIN#readme",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1"
+  }
+}

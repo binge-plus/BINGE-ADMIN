@@ -1,0 +1,223 @@
+:root {
+    --primary: #ff5722;
+    --secondary: #3d5afe;
+    --background: #f8f9fa;
+    --card-background: #ffffff;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --border-color: #e0e0e0;
+    --header-bg: #212121;
+    --danger: #e50914;
+}
+
+[theme="dark"] {
+    --background: #121212;
+    --card-background: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border-color: #2d2d2d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-logo {
+    color: var(--primary);
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.header-subtitle {
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+.user-info {
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    background-color: var(--card-background);
+    border: none;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    font-size: 48px;
+    color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.card-title {
+    font-weight: 600;
+    margin-top: 15px;
+    color: var(--text-primary);
+}
+
+.card-text {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.card-link {
+    margin-top: 15px;
+    display: inline-block;
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+/* Category Headings */
+.category-heading {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 30px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary);
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--header-bg);
+    color: #e0e0e0;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-logo {
+        font-size: 24px;
+    }
+
+    .user-info {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+    .dashboard-card {
+        margin-bottom: 20px;
+    }
+}
+
+/* Card Variants */
+.development-card .card-icon {
+    color: #3d5afe;
+}
+
+.monitoring-card .card-icon {
+    color: #00c853;
+}
+
+.analytics-card .card-icon {
+    color: #ff6d00;
+}
+
+/* Search Bar */
+.input-group {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.input-group .form-control {
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+}
+
+.input-group .btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    padding: 0.75rem 1.5rem;
+}
+
+.input-group .btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+/* Card Footer */
+.card-footer {
+    background-color: transparent !important;
+    border-top: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+}
+
+.card-footer .text-muted {
+    color: var(--text-secondary) !important;
+} 
