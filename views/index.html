@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Movie - Binge+ Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="public/css/styles.css" rel="stylesheet" />
+</head>
+<body theme="light">
+    <div class="container">
+        <div class="back-link">
+            <a href="/index.html" class="link-primary">
+                <i class="ri-arrow-left-line"></i>
+                Back to Home Page
+            </a>
+        </div>
+
+        <form id="movieForm" class="form-container" action="/movie" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">Add New Movie</h1>
+                    <p class="card-description">Enter the details for the new movie</p>
+                </div>
+                
+                <div class="card-content">
+                    <!-- Basic Information -->
+                    <div class="section">
+                        <h3 class="section-title">Basic Information</h3>
+                        <div class="separator"></div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" id="title" name="title" placeholder="Movie Title" required class="input-field">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="genre">Genre</label>
+                                <input type="text" id="genre" name="genre" placeholder="e.g. Action, Drama, Comedy" class="input-field">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="details">Description</label>
+                            <input id="details" name="details" placeholder="Enter a detailed description of the movie" class="input-field"></input>
+                        </div>
+
+                        <div class="grid-3">
+                            <div class="form-group">
+                                <label for="rating">IMDB Rating</label>
+                                <input type="text" id="rating" name="rating" placeholder="e.g. 8.5" class="input-field">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="releaseDate">Release Date</label>
+                                <input type="date" id="releaseDate" name="releaseDate" class="input-field">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quality">Available Quality</label>
+                                <input type="text" id="quality" name="quality" placeholder="e.g. HD, 4K, 1080p" class="input-field">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="director">Director</label>
+                            <input type="text" id="director" name="director" placeholder="Director's name" class="input-field">
+                        </div>
+                    </div>
+
+                    <!-- Media Section -->
+                    <div class="section">
+                        <h3 class="section-title">Media</h3>
+                        <div class="separator"></div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="imageH">Landscape Image URL</label>
+                                <input type="url" id="imageH" name="imageH" placeholder="https://example.com/image.jpg" class="input-field">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="imageV">Portrait Image URL</label>
+                                <input type="url" id="imageV" name="imageV" placeholder="https://example.com/image.jpg" class="input-field">
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="visitMovie">Streaming Link</label>
+                                <input type="url" id="visitMovie" name="visitMovie" placeholder="Movie streaming URL" class="input-field">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="trailer">YouTube Trailer Link</label>
+                                <input type="url" id="trailer" name="trailer" placeholder="https://youtube.com/watch?v=..." class="input-field">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cast Members -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h3 class="section-title">Cast Members</h3>
+                            <button type="button" class="button-outline" id="addCastBtn">
+                                <i class="ri-add-circle-line"></i>
+                                Add Cast Member
+                            </button>
+                        </div>
+                        <div class="separator"></div>
+
+                        <div id="castContainer">
+                            <div class="cast-member">
+                                <input type="text" name="cast[]" placeholder="Actor name" class="input-field">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marvel Checkbox -->
+                    <div class="section">
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="Marvel" name="Marvel" value="1" class="checkbox-input">
+                            <label for="Marvel">Marvel Movie</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="button" class="button-secondary">Cancel</button>
+                    <button type="submit" class="button-primary">Save Movie</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/movie.js"></script>
+</body>
+</html> 

@@ -2,10 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const flash = require('connect-flash');
+const connectDB = require('./config/db');
 const path = require('path');
-
+const movieRoutes = require('./routes/movieRoutes');
 
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(express.json());
@@ -22,7 +26,12 @@ app.use(flash());
 app.use(express.static('views'));
 
 // Routes
-app.use('/', require('./routes/authRoutes'));
+app.use('/movies', movieRoutes);
+
+// Add route handlers for the HTML pages
+app.get('/movies', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.use('/public', express.static('public'));
 
