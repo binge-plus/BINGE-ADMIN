@@ -1,0 +1,91 @@
+name: Copy files and Start Nodemon Service
+
+on:
+  push:
+    branches:
+      - workflow-monitoring-dashboard
+
+jobs:
+  copy-files-to-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Dir github-actions-dashboard
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            sudo mkdir -p /var/www/html/github-actions-dashboard
+            sudo chown -R binge+:binge+ /var/www/html/github-actions-dashboard
+
+      - name: Copy files to GCP VM
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          source: "."
+          target: "/var/www/html/github-actions-dashboard" 
+
+
+  # Start Nodemon Service for github-actions-dashboard
+  start_nodemon-monitoring-dashboard:
+    runs-on: ubuntu-latest
+    needs: copy-files-to-server 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: us-east-1
+
+      # Install Mozilla Sops
+      - name: Install Mozilla Sops Binary
+        uses: mdgreenwald/mozilla-sops-action@v1.4.1
+        with:
+          version: 'v3.7.3'
+
+      - name: Decrypt environment variables
+        shell: bash
+        run: |
+          sops --decrypt workflow-monitoring-dashboard-env.enc > .env
+
+      - name: Copy decrypted env file to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          source: ".env"
+          target: "/var/www/html/github-actions-dashboard/"
+
+      - name: Start Nodemon
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html/github-actions-dashboard
+            chmod +x start_nodemon_workflow_monitoring_dashboard.sh
+            ./start_nodemon_workflow_monitoring_dashboard.sh  
+
+      - name: Restart Apache2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            sudo systemctl restart apache2

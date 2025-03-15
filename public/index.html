@@ -1,0 +1,514 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions Monitor</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <style>
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-success { background-color: #10B981; color: white; }
+    .status-failure { background-color: #EF4444; color: white; }
+    .status-cancelled { background-color: #9CA3AF; color: white; }
+    .status-in_progress { background-color: #3B82F6; color: white; }
+    .status-queued { background-color: #F59E0B; color: white; }
+    .status-skipped { background-color: #8B5CF6; color: white; }
+    .status-default { background-color: #6B7280; color: white; }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+    
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: #3B82F6;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .refresh-button {
+      transition: transform 0.2s ease;
+    }
+    
+    .refresh-button:hover {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <header class="mb-8">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800">GitHub Actions Monitor</h1>
+        <button id="refreshButton" class="refresh-button bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
+      </div>
+      <div id="repoInfo" class="text-gray-600 mt-2"></div>
+    </header>
+    
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Workflow Runs</h2>
+        <p id="totalRuns" class="text-3xl font-bold text-blue-600">-</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Success Rate</h2>
+        <p id="successRate" class="text-3xl font-bold text-green-600">-</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Last Run</h2>
+        <p id="lastRun" class="text-3xl font-bold text-gray-600">-</p>
+      </div>
+    </div>
+    
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Workflow Success vs Failure</h2>
+        <div id="statusChartContainer" class="loading">
+          <div class="spinner"></div>
+        </div>
+        <canvas id="statusChart" class="hidden"></canvas>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Workflow Runs Timeline</h2>
+        <div id="timelineChartContainer" class="loading">
+          <div class="spinner"></div>
+        </div>
+        <canvas id="timelineChart" class="hidden"></canvas>
+      </div>
+    </div>
+    
+    <!-- Recent Runs Table -->
+    <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-xl font-semibold text-gray-700">Recent Workflow Runs</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Workflow</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Started</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentRunsTable" class="bg-white divide-y divide-gray-200">
+            <tr>
+              <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                <div class="loading">
+                  <div class="spinner"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Workflow Details Section -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Workflow Details</h2>
+      <div id="workflowStatsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="loading">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Charts
+      let statusChart;
+      let timelineChart;
+      
+      // Function to format dates
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString();
+      }
+      
+      // Function to calculate duration
+      function calculateDuration(start, end) {
+        const startDate = new Date(start);
+        const endDate = end ? new Date(end) : new Date();
+        const durationMs = endDate - startDate;
+        
+        const seconds = Math.floor(durationMs / 1000);
+        if (seconds < 60) return `${seconds}s`;
+        
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return `${minutes}m ${seconds % 60}s`;
+        
+        const hours = Math.floor(minutes / 60);
+        return `${hours}h ${minutes % 60}m`;
+      }
+      
+      // Function to get status badge class
+      function getStatusBadgeClass(status, conclusion) {
+        if (status !== 'completed') {
+          return `status-${status}`;
+        }
+        
+        switch (conclusion) {
+          case 'success': return 'status-success';
+          case 'failure': return 'status-failure';
+          case 'cancelled': return 'status-cancelled';
+          case 'skipped': return 'status-skipped';
+          default: return 'status-default';
+        }
+      }
+      
+      // Function to get status display text
+      function getStatusDisplay(status, conclusion) {
+        if (status !== 'completed') {
+          return status.replace('_', ' ');
+        }
+        return conclusion || 'unknown';
+      }
+      
+      // Function to fetch data and update UI
+      async function fetchAndUpdateData() {
+        try {
+          const response = await fetch('/api/workflow-runs');
+          if (!response.ok) {
+            throw new Error(`API responded with status ${response.status}`);
+          }
+          
+          const data = await response.json();
+          updateDashboard(data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          alert('Failed to fetch workflow data. See console for details.');
+        }
+      }
+      
+      // Function to update the dashboard with data
+      function updateDashboard(data) {
+        // Update stats cards
+        document.getElementById('totalRuns').textContent = data.totalRuns;
+        document.getElementById('successRate').textContent = `${data.successRate.toFixed(1)}%`;
+        
+        const lastRun = data.recentRuns[0];
+        if (lastRun) {
+          const lastRunDate = new Date(lastRun.created_at);
+          const now = new Date();
+          const diffMs = now - lastRunDate;
+          const diffMins = Math.floor(diffMs / 60000);
+          
+          if (diffMins < 60) {
+            document.getElementById('lastRun').textContent = `${diffMins}m ago`;
+          } else {
+            const diffHours = Math.floor(diffMins / 60);
+            if (diffHours < 24) {
+              document.getElementById('lastRun').textContent = `${diffHours}h ago`;
+            } else {
+              const diffDays = Math.floor(diffHours / 24);
+              document.getElementById('lastRun').textContent = `${diffDays}d ago`;
+            }
+          }
+        }
+        
+        // Update repository info
+        if (data.recentRuns.length > 0) {
+          const repoUrl = data.recentRuns[0].url.split('/actions/runs')[0];
+          document.getElementById('repoInfo').textContent = `Monitoring: ${repoUrl}`;
+        }
+        
+        // Update recent runs table
+        const recentRunsTable = document.getElementById('recentRunsTable');
+        recentRunsTable.innerHTML = '';
+        
+        data.recentRuns.forEach(run => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900">${run.name}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="status-badge ${getStatusBadgeClass(run.status, run.conclusion)}">
+                ${getStatusDisplay(run.status, run.conclusion)}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-500" title="${formatDate(run.created_at)}">
+                ${new Date(run.created_at).toLocaleDateString()}
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-500">
+                ${calculateDuration(run.created_at, run.updated_at)}
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <a href="${run.url}" target="_blank" class="text-blue-600 hover:text-blue-900">View</a>
+            </td>
+          `;
+          recentRunsTable.appendChild(row);
+        });
+        
+        // Update status chart
+        updateStatusChart(data);
+        
+        // Update timeline chart
+        updateTimelineChart(data);
+        
+        // Update workflow stats
+        updateWorkflowStats(data.workflowStats);
+      }
+      
+      // Function to update the status chart
+      function updateStatusChart(data) {
+        const statusCounts = {
+          success: 0,
+          failure: 0,
+          cancelled: 0,
+          skipped: 0,
+          other: 0
+        };
+        
+        data.recentRuns.forEach(run => {
+          if (run.status === 'completed') {
+            switch (run.conclusion) {
+              case 'success':
+                statusCounts.success++;
+                break;
+              case 'failure':
+                statusCounts.failure++;
+                break;
+              case 'cancelled':
+                statusCounts.cancelled++;
+                break;
+              case 'skipped':
+                statusCounts.skipped++;
+                break;
+              default:
+                statusCounts.other++;
+            }
+          } else if (run.status === 'in_progress') {
+            statusCounts.other++;
+          }
+        });
+        
+        const ctx = document.getElementById('statusChart').getContext('2d');
+        document.getElementById('statusChartContainer').classList.remove('loading');
+        document.getElementById('statusChartContainer').innerHTML = '';
+        document.getElementById('statusChart').classList.remove('hidden');
+        
+        if (statusChart) {
+          statusChart.destroy();
+        }
+        
+        statusChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Success', 'Failure', 'Cancelled', 'Skipped', 'Other'],
+            datasets: [{
+              label: 'Workflow Status',
+              data: [
+                statusCounts.success,
+                statusCounts.failure,
+                statusCounts.cancelled,
+                statusCounts.skipped,
+                statusCounts.other
+              ],
+              backgroundColor: [
+                '#10B981', // success - green
+                '#EF4444', // failure - red
+                '#9CA3AF', // cancelled - gray
+                '#8B5CF6', // skipped - purple
+                '#6B7280'  // other - dark gray
+              ]
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }
+        });
+      }
+      
+      // Function to update the timeline chart
+      function updateTimelineChart(data) {
+        // Process data for timeline chart (last 7 days)
+        const now = new Date();
+        const pastDays = 7;
+        const dates = [];
+        const successCounts = [];
+        const failureCounts = [];
+        
+        for (let i = pastDays - 1; i >= 0; i--) {
+          const date = new Date(now);
+          date.setDate(date.getDate() - i);
+          date.setHours(0, 0, 0, 0);
+          dates.push(date.toLocaleDateString());
+          successCounts.push(0);
+          failureCounts.push(0);
+        }
+        
+        data.recentRuns.forEach(run => {
+          const runDate = new Date(run.created_at);
+          runDate.setHours(0, 0, 0, 0);
+          
+          for (let i = 0; i < pastDays; i++) {
+            const chartDate = new Date(now);
+            chartDate.setDate(chartDate.getDate() - (pastDays - 1) + i);
+            chartDate.setHours(0, 0, 0, 0);
+            
+            if (runDate.getTime() === chartDate.getTime()) {
+              if (run.status === 'completed' && run.conclusion === 'success') {
+                successCounts[i]++;
+              } else if (run.status === 'completed' && run.conclusion === 'failure') {
+                failureCounts[i]++;
+              }
+              break;
+            }
+          }
+        });
+        
+        const ctx = document.getElementById('timelineChart').getContext('2d');
+        document.getElementById('timelineChartContainer').classList.remove('loading');
+        document.getElementById('timelineChartContainer').innerHTML = '';
+        document.getElementById('timelineChart').classList.remove('hidden');
+        
+        if (timelineChart) {
+          timelineChart.destroy();
+        }
+        
+        timelineChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: dates,
+            datasets: [
+              {
+                label: 'Successful',
+                data: successCounts,
+                backgroundColor: '#10B981'
+              },
+              {
+                label: 'Failed',
+                data: failureCounts,
+                backgroundColor: '#EF4444'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: true,
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1
+                }
+              }
+            }
+          }
+        });
+      }
+      
+      // Function to update workflow stats
+      function updateWorkflowStats(stats) {
+        const container = document.getElementById('workflowStatsContainer');
+        container.innerHTML = '';
+        
+        if (Object.keys(stats).length === 0) {
+          container.innerHTML = '<p class="text-gray-500">No workflow data available</p>';
+          return;
+        }
+        
+        for (const id in stats) {
+          const workflow = stats[id];
+          const card = document.createElement('div');
+          card.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+          
+          const successRate = workflow.total > 0 
+            ? ((workflow.success / workflow.total) * 100).toFixed(0) 
+            : 0;
+          
+          card.innerHTML = `
+            <h3 class="font-semibold text-gray-800 mb-2">${workflow.name}</h3>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <p class="text-sm text-gray-600">Total Runs</p>
+                <p class="text-lg font-medium">${workflow.total}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Success Rate</p>
+                <p class="text-lg font-medium ${successRate >= 80 ? 'text-green-600' : successRate >= 50 ? 'text-yellow-600' : 'text-red-600'}">
+                  ${successRate}%
+                </p>
+              </div>
+            </div>
+            <div class="mt-3 h-2 bg-gray-200 rounded overflow-hidden">
+              <div class="h-full bg-green-500" style="width: ${successRate}%"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mt-3 text-xs text-gray-600">
+              <div>
+                <span class="status-badge status-success">Success</span>
+                <span>${workflow.success}</span>
+              </div>
+              <div>
+                <span class="status-badge status-failure">Failed</span>
+                <span>${workflow.failure}</span>
+              </div>
+              <div>
+                <span class="status-badge status-cancelled">Other</span>
+                <span>${workflow.cancelled + workflow.skipped + workflow.other}</span>
+              </div>
+            </div>
+          `;
+          
+          container.appendChild(card);
+        }
+      }
+      
+      // Initial data fetch
+      fetchAndUpdateData();
+      
+      // Set up refresh button
+      document.getElementById('refreshButton').addEventListener('click', () => {
+        fetchAndUpdateData();
+      });
+      
+      // Auto-refresh every 2 minutes
+      setInterval(fetchAndUpdateData, 2 * 60 * 1000);
+    });
+  </script>
+</body>
+</html>
