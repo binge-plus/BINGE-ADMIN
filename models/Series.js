@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 
-const movieSchema = new mongoose.Schema({
+const episodeSchema = new mongoose.Schema({
+    EpisodeNumber: {
+        type: Number,
+        required: true
+    },
+    EpisodeTitle: {
+        type: String,
+        required: true
+    }
+});
+
+const seriesSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -40,18 +51,11 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    visitMovie: {
-        type: String,
-        required: true
-    },
     trailer: {
         type: String,
         required: true
     },
-    isMarvel: {
-        type: Boolean,
-        default: false
-    }
+    episodes: [episodeSchema]
 });
 
-module.exports = mongoose.model('Movie', movieSchema); 
+module.exports = mongoose.model('Series', seriesSchema); 

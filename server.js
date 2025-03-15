@@ -4,7 +4,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const connectDB = require('./config/db');
 const path = require('path');
-const movieRoutes = require('./routes/movieRoutes');
+const seriesRoutes = require('./routes/seriesRoutes');
 
 const app = express();
 
@@ -26,10 +26,10 @@ app.use(flash());
 app.use(express.static('views'));
 
 // Routes
-app.use('/movies', movieRoutes);
+app.use('/series', seriesRoutes);
 
 // Add route handlers for the HTML pages
-app.get('/movies', (req, res) => {
+app.get('/series', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

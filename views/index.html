@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Movie - Binge+ Admin Panel</title>
+    <title>Add Series - Binge+ Admin Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="public/css/styles.css" rel="stylesheet" />
@@ -17,11 +17,11 @@
             </a>
         </div>
 
-        <form id="movieForm" class="form-container" action="/movie" method="post">
+        <form id="seriesForm" class="form-container" action="/series" method="post">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-title">Add New Movie</h1>
-                    <p class="card-description">Enter the details for the new movie</p>
+                    <h1 class="card-title">Add New Series</h1>
+                    <p class="card-description">Enter the details for the new TV series</p>
                 </div>
                 
                 <div class="card-content">
@@ -33,18 +33,18 @@
                         <div class="grid-2">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" id="title" name="title" placeholder="Movie Title" required class="input-field">
+                                <input type="text" id="title" name="title" placeholder="Series Title" required class="input-field">
                             </div>
 
                             <div class="form-group">
                                 <label for="genre">Genre</label>
-                                <input type="text" id="genre" name="genre" placeholder="e.g. Action, Drama, Comedy" class="input-field">
+                                <input type="text" id="genre" name="genre" placeholder="e.g. Drama, Action, Comedy" class="input-field">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="details">Description</label>
-                            <input id="details" name="details" placeholder="Enter a detailed description of the movie" class="input-field"></input>
+                            <textarea id="details" name="details" placeholder="Enter a detailed description of the series" class="textarea-field"></textarea>
                         </div>
 
                         <div class="grid-3">
@@ -87,16 +87,9 @@
                             </div>
                         </div>
 
-                        <div class="grid-2">
-                            <div class="form-group">
-                                <label for="visitMovie">Streaming Link</label>
-                                <input type="url" id="visitMovie" name="visitMovie" placeholder="Movie streaming URL" class="input-field">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="trailer">YouTube Trailer Link</label>
-                                <input type="url" id="trailer" name="trailer" placeholder="https://youtube.com/watch?v=..." class="input-field">
-                            </div>
+                        <div class="form-group">
+                            <label for="trailer">YouTube Trailer Link</label>
+                            <input type="url" id="trailer" name="trailer" placeholder="https://youtube.com/watch?v=..." class="input-field">
                         </div>
                     </div>
 
@@ -118,24 +111,41 @@
                         </div>
                     </div>
 
-                    <!-- Marvel Checkbox -->
+                    <!-- Episodes -->
                     <div class="section">
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="Marvel" name="Marvel" value="1" class="checkbox-input">
-                            <label for="Marvel">Marvel Movie</label>
+                        <div class="section-header">
+                            <h3 class="section-title">Episodes</h3>
+                            <button type="button" class="button-outline" id="addEpisodeBtn">
+                                <i class="ri-add-circle-line"></i>
+                                Add Episode
+                            </button>
+                        </div>
+                        <div class="separator"></div>
+
+                        <div id="episodesContainer">
+                            <div class="episode-row">
+                                <div class="episode-number">
+                                    <label>Episode #</label>
+                                    <input type="number" name="episodes[0][EpisodeNumber]" value="1" min="1" class="input-field">
+                                </div>
+                                <div class="episode-title">
+                                    <label>Episode Title</label>
+                                    <input type="text" name="episodes[0][EpisodeTitle]" placeholder="Episode title" class="input-field">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-footer">
                     <button type="button" class="button-secondary">Cancel</button>
-                    <button type="submit" class="button-primary">Save Movie</button>
+                    <button type="submit" class="button-primary">Save Series</button>
                 </div>
             </div>
         </form>
     </div>
 
     <script src="/js/scripts.js"></script>
-    <script src="/js/movie.js"></script>
+    <script src="/js/series.js"></script>
 </body>
 </html> 
