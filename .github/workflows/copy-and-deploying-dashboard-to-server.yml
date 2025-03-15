@@ -22,7 +22,7 @@ jobs:
           script: |
             sudo mkdir -p /var/www/html/github-actions-dashboard
             sudo chown -R binge+:binge+ /var/www/html/github-actions-dashboard
-
+ 
       - name: Copy files to GCP VM
         uses: appleboy/scp-action@master
         with:
