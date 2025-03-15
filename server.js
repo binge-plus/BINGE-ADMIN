@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3001; 
 
 // GitHub configuration - from environment variables
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
