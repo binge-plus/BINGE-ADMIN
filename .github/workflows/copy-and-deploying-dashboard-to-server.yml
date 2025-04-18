@@ -78,7 +78,7 @@ jobs:
           key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
           script: |
             cd /var/www/html/github-actions-dashboard
-            npm -i
+            npm install
           
       - name: Start Nodemon
         uses: appleboy/ssh-action@master
