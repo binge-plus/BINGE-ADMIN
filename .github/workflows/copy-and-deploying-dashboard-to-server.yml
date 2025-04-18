@@ -90,7 +90,7 @@ jobs:
             cd /var/www/html/github-actions-dashboard
             chmod +x start_nodemon_workflow_monitoring_dashboard.sh
             ./start_nodemon_workflow_monitoring_dashboard.sh  
-
+ 
       - name: Restart Apache2
         uses: appleboy/ssh-action@master
         with:
