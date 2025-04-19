@@ -154,6 +154,10 @@ app.get('/api/workflow-runs/:owner/:repo', async (req, res) => {
     const workflowsResponse = await githubApi.get(`/repos/${owner}/${repo}/actions/workflows`);
     const workflows = workflowsResponse.data.workflows;
 
+    // Get total runs count from the runs endpoint
+    const runsResponse = await githubApi.get(`/repos/${owner}/${repo}/actions/runs`);
+    const totalRuns = runsResponse.data.total_count;
+
     // Get recent runs for the dashboard (last 30)
     const recentRunsResponse = await githubApi.get(
       `/repos/${owner}/${repo}/actions/runs`,
@@ -161,12 +165,11 @@ app.get('/api/workflow-runs/:owner/:repo', async (req, res) => {
     );
     const recentRuns = recentRunsResponse.data.workflow_runs;
 
-    // Calculate total runs and success rate for recent runs
-    const totalRuns = recentRuns.length;
+    // Calculate success rate from recent runs
     const successfulRuns = recentRuns.filter(run => 
       run.status === 'completed' && run.conclusion === 'success'
     ).length;
-    const successRate = totalRuns > 0 ? (successfulRuns / totalRuns) * 100 : 0;
+    const successRate = recentRuns.length > 0 ? (successfulRuns / recentRuns.length) * 100 : 0;
 
     // Fetch complete historical data for each workflow
     const workflowStats = {};
@@ -223,7 +226,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`GitHub Actions monitoring dashboard running at http://34.55.187.199:${port}`);
+  console.log(`GitHub Actions monitoring dashboard running at http://localhost:${port}`);
 });
 
-// http://34.55.187.199:${port}
+// http://localhost:${port}
