@@ -1,4 +1,3 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,106 +6,105 @@
   <title>GitHub Actions Monitor</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-  <style>
-    .status-badge {
-      display: inline-block;
-      padding: 0.25rem 0.5rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .status-success { background-color: #10B981; color: white; }
-    .status-failure { background-color: #EF4444; color: white; }
-    .status-cancelled { background-color: #9CA3AF; color: white; }
-    .status-in_progress { background-color: #3B82F6; color: white; }
-    .status-queued { background-color: #F59E0B; color: white; }
-    .status-skipped { background-color: #8B5CF6; color: white; }
-    .status-default { background-color: #6B7280; color: white; }
-    
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 200px;
-    }
-    
-    .spinner {
-      border: 4px solid rgba(0, 0, 0, 0.1);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border-left-color: #3B82F6;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .refresh-button {
-      transition: transform 0.2s ease;
-    }
-    
-    .refresh-button:hover {
-      transform: rotate(180deg);
-    }
-  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-50 min-h-screen">
   <div class="container mx-auto px-4 py-8">
-    <header class="mb-8">
-      <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-800">GitHub Actions Monitor</h1>
-        <button id="refreshButton" class="refresh-button bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-        </button>
+    <header class="mb-8 bg-white rounded-lg shadow p-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800 flex items-center">
+            <i class="fab fa-github-alt mr-3 text-blue-600"></i>
+            GitHub Actions Monitor
+          </h1>
+          <p id="repoInfo" class="text-gray-600 mt-2 text-sm"></p>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="repo-selector">
+            <select id="repoSelect" class="form-select bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full">
+              <option value="">Select a repository</option>
+            </select>
+          </div>
+          <button id="refreshButton" class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
       </div>
-      <div id="repoInfo" class="text-gray-600 mt-2"></div>
     </header>
     
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Workflow Runs</h2>
-        <p id="totalRuns" class="text-3xl font-bold text-blue-600">-</p>
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+            <i class="fas fa-tasks text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-gray-700">Total Workflow Runs</h2>
+            <p id="totalRuns" class="text-2xl font-bold text-blue-600">-</p>
+          </div>
+        </div>
       </div>
       
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-2">Success Rate</h2>
-        <p id="successRate" class="text-3xl font-bold text-green-600">-</p>
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+            <i class="fas fa-check-circle text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-gray-700">Success Rate</h2>
+            <p id="successRate" class="text-2xl font-bold text-green-600">-</p>
+          </div>
+        </div>
       </div>
       
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-2">Last Run</h2>
-        <p id="lastRun" class="text-3xl font-bold text-gray-600">-</p>
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+            <i class="fas fa-clock text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-gray-700">Last Run</h2>
+            <p id="lastRun" class="text-2xl font-bold text-purple-600">-</p>
+          </div>
+        </div>
       </div>
     </div>
-    
+
     <!-- Charts Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Workflow Success vs Failure</h2>
-        <div id="statusChartContainer" class="loading">
-          <div class="spinner"></div>
+        <div class="flex items-center mb-4">
+          <i class="fas fa-chart-pie text-blue-600 mr-2"></i>
+          <h2 class="text-xl font-semibold text-gray-700">Workflow Status Distribution</h2>
         </div>
-        <canvas id="statusChart" class="hidden"></canvas>
+        <div class="relative" style="height: 300px;">
+          <div id="statusChartContainer" class="loading absolute inset-0">
+            <div class="spinner"></div>
+          </div>
+          <canvas id="statusChart" class="hidden w-full h-full"></canvas>
+        </div>
       </div>
-      
+    
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Workflow Runs Timeline</h2>
-        <div id="timelineChartContainer" class="loading">
-          <div class="spinner"></div>
+        <div class="flex items-center mb-4">
+          <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+          <h2 class="text-xl font-semibold text-gray-700">Workflow Runs Timeline</h2>
         </div>
-        <canvas id="timelineChart" class="hidden"></canvas>
+        <div class="relative" style="height: 300px;">
+          <div id="timelineChartContainer" class="loading absolute inset-0">
+            <div class="spinner"></div>
+          </div>
+          <canvas id="timelineChart" class="hidden w-full h-full"></canvas>
+        </div>
       </div>
     </div>
-    
+
     <!-- Recent Runs Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
-      <div class="px-6 py-4 border-b border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center">
+        <i class="fas fa-history text-blue-600 mr-2"></i>
         <h2 class="text-xl font-semibold text-gray-700">Recent Workflow Runs</h2>
       </div>
       <div class="overflow-x-auto">
@@ -132,10 +130,13 @@
         </table>
       </div>
     </div>
-    
+
     <!-- Workflow Details Section -->
     <div class="bg-white rounded-lg shadow p-6">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Workflow Details</h2>
+      <div class="flex items-center mb-4">
+        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+        <h2 class="text-xl font-semibold text-gray-700">Workflow Details</h2>
+      </div>
       <div id="workflowStatsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="loading">
           <div class="spinner"></div>
@@ -149,7 +150,8 @@
       // Charts
       let statusChart;
       let timelineChart;
-      
+      let currentRepo = null;
+
       // Function to format dates
       function formatDate(dateString) {
         const date = new Date(dateString);
@@ -194,11 +196,45 @@
         }
         return conclusion || 'unknown';
       }
+
+      // Fetch and populate repositories
+      async function loadRepositories() {
+        try {
+          const response = await fetch('/api/repositories');
+          const repos = await response.json();
+          
+          const select = document.getElementById('repoSelect');
+          repos.forEach(repo => {
+            const option = document.createElement('option');
+            option.value = `${repo.owner.login}/${repo.name}`;
+            option.textContent = repo.name;
+            select.appendChild(option);
+          });
+
+          // If we have repositories, select a random one
+          if (repos.length > 0) {
+            const randomIndex = Math.floor(Math.random() * repos.length);
+            const randomRepo = repos[randomIndex];
+            select.value = `${randomRepo.owner.login}/${randomRepo.name}`;
+            
+            // Set current repo and fetch data
+            currentRepo = {
+              owner: randomRepo.owner.login,
+              repo: randomRepo.name
+            };
+            fetchAndUpdateData();
+          }
+        } catch (error) {
+          console.error('Error loading repositories:', error);
+        }
+      }
       
       // Function to fetch data and update UI
       async function fetchAndUpdateData() {
+        if (!currentRepo) return;
+
         try {
-          const response = await fetch('/api/workflow-runs');
+          const response = await fetch(`/api/workflow-runs/${currentRepo.owner}/${currentRepo.repo}`);
           if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
           }
@@ -243,11 +279,12 @@
           document.getElementById('repoInfo').textContent = `Monitoring: ${repoUrl}`;
         }
         
-        // Update recent runs table
+        // Update recent runs table (only last 10 runs)
         const recentRunsTable = document.getElementById('recentRunsTable');
         recentRunsTable.innerHTML = '';
         
-        data.recentRuns.forEach(run => {
+        const last10Runs = data.recentRuns.slice(0, 10);
+        last10Runs.forEach(run => {
           const row = document.createElement('tr');
           row.innerHTML = `
             <td class="px-6 py-4 whitespace-nowrap">
@@ -275,13 +312,13 @@
           recentRunsTable.appendChild(row);
         });
         
-        // Update status chart
+        // Update status chart (using all runs for better distribution)
         updateStatusChart(data);
         
-        // Update timeline chart
+        // Update timeline chart (using all runs for better timeline)
         updateTimelineChart(data);
-        
-        // Update workflow stats
+
+        // Update workflow stats (using all runs for total counts)
         updateWorkflowStats(data.workflowStats);
       }
       
@@ -351,6 +388,7 @@
           },
           options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
               legend: {
                 position: 'bottom'
@@ -426,6 +464,7 @@
           },
           options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
               x: {
                 stacked: true
@@ -497,13 +536,36 @@
           container.appendChild(card);
         }
       }
+
+      // Initialize
+      loadRepositories();
       
-      // Initial data fetch
-      fetchAndUpdateData();
+      // Set up repository selection
+      document.getElementById('repoSelect').addEventListener('change', (e) => {
+        const [owner, repo] = e.target.value.split('/');
+        if (owner && repo) {
+          currentRepo = { owner, repo };
+          fetchAndUpdateData();
+        }
+      });
       
       // Set up refresh button
       document.getElementById('refreshButton').addEventListener('click', () => {
-        fetchAndUpdateData();
+        if (currentRepo) {
+          fetchAndUpdateData();
+        } else {
+          // If no repo is selected, select a random one
+          const select = document.getElementById('repoSelect');
+          const options = Array.from(select.options).filter(opt => opt.value);
+          if (options.length > 0) {
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const randomOption = options[randomIndex];
+            select.value = randomOption.value;
+            const [owner, repo] = randomOption.value.split('/');
+            currentRepo = { owner, repo };
+            fetchAndUpdateData();
+          }
+        }
       });
       
       // Auto-refresh every 2 minutes

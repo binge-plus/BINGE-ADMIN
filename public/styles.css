@@ -1,0 +1,64 @@
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-success { 
+  background-color: #10B981; 
+  color: white; 
+}
+
+.status-failure { 
+  background-color: #EF4444; 
+  color: white; 
+}
+
+.status-cancelled { 
+  background-color: #9CA3AF; 
+  color: white; 
+}
+
+.status-in_progress { 
+  background-color: #3B82F6; 
+  color: white; 
+}
+
+.status-queued { 
+  background-color: #F59E0B; 
+  color: white; 
+}
+
+.status-skipped { 
+  background-color: #8B5CF6; 
+  color: white; 
+}
+
+.status-default { 
+  background-color: #6B7280; 
+  color: white; 
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #3B82F6;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 
