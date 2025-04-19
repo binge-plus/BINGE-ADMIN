@@ -1,3 +1,42 @@
+/* Variables */
+:root {
+  --gradient-blue: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+  --gradient-green: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  --gradient-purple: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+  --gradient-background: linear-gradient(120deg, #f6f8fc 0%, #e9edf5 50%, #dce4f3 100%);
+  --gradient-card: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  background: var(--gradient-background);
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(96, 165, 250, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(52, 211, 153, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(167, 139, 250, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
 /* Status Badges */
 .status-badge {
   display: inline-block;
@@ -6,41 +45,42 @@
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: capitalize;
+  box-shadow: var(--shadow-sm);
 }
 
-/* Status Colors */
+/* Status Colors with Gradients */
 .status-success { 
-  background-color: #10B981; 
+  background: var(--gradient-green);
   color: white; 
 }
 
 .status-failure { 
-  background-color: #EF4444; 
+  background: linear-gradient(135deg, #F87171 0%, #EF4444 100%);
   color: white; 
 }
 
 .status-cancelled { 
-  background-color: #9CA3AF; 
+  background: linear-gradient(135deg, #D1D5DB 0%, #9CA3AF 100%);
   color: white; 
 }
 
 .status-in_progress { 
-  background-color: #3B82F6; 
+  background: var(--gradient-blue);
   color: white; 
 }
 
 .status-queued { 
-  background-color: #F59E0B; 
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
   color: white; 
 }
 
 .status-skipped { 
-  background-color: #8B5CF6; 
+  background: var(--gradient-purple);
   color: white; 
 }
 
 .status-default { 
-  background-color: #6B7280; 
+  background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%);
   color: white; 
 }
 
@@ -50,11 +90,12 @@
   justify-content: center;
   align-items: center;
   height: 200px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
 }
 
 .spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
+  border: 4px solid rgba(59, 130, 246, 0.1);
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -62,50 +103,124 @@
   animation: spin 1s linear infinite;
 }
 
-/* Animations */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Refresh Button */
+.refresh-button {
+  position: relative;
+  background: var(--gradient-blue);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
 
-/* Card Styles */
+.refresh-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.refresh-button:active {
+  transform: translateY(0);
+}
+
+.refresh-button i {
+  transition: transform 0.5s ease;
+}
+
+.refresh-button:hover i {
+  transform: rotate(180deg);
+}
+
+.refresh-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+  clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%);
+  transition: transform 0.3s ease;
+}
+
+.refresh-button:hover::after {
+  transform: translateY(100%);
+}
+
+/* Card Styles with Gradients */
 .card {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background: white;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-md);
   padding: 1.5rem;
   transition: all 0.3s ease;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
 }
 
 .card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Stats Cards */
+.stats-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-blue);
+}
+
+.stats-card.success::before {
+  background: var(--gradient-green);
+}
+
+.stats-card.warning::before {
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
 }
 
 /* Table Styles */
 .table-container {
   overflow-x: auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-md);
+  background: white;
 }
 
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .table th {
-  background-color: #F9FAFB;
-  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+  padding: 1rem 1.5rem;
   text-align: left;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  color: #6B7280;
+  color: #4B5563;
+  border-bottom: 1px solid #E5E7EB;
 }
 
 .table td {
   padding: 1rem 1.5rem;
-  border-top: 1px solid #E5E7EB;
+  border-bottom: 1px solid #E5E7EB;
+  background: white;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
 }
 
 /* Chart Container */
@@ -113,20 +228,53 @@
   position: relative;
   height: 300px;
   width: 100%;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
 }
 
 /* Progress Bar */
 .progress-bar {
   height: 0.5rem;
-  background-color: #E5E7EB;
+  background: #E5E7EB;
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #10B981;
+  background: var(--gradient-green);
   transition: width 0.3s ease;
+}
+
+/* Repository Selector */
+.repo-selector {
+  min-width: 250px;
+}
+
+.repo-selector select {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  background: white;
+  color: #374151;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.repo-selector select:focus {
+  outline: none;
+  border-color: #60A5FA;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+/* Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Utility Classes */
@@ -150,4 +298,8 @@
   .table td {
     padding: 0.75rem 1rem;
   }
-} 
+  
+  .repo-selector {
+    min-width: 200px;
+  }
+}

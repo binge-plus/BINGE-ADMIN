@@ -225,3 +225,5 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   console.log(`GitHub Actions monitoring dashboard running at http://34.55.187.199:${port}`);
 });
+
+// http://34.55.187.199:${port}

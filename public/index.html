@@ -11,7 +11,7 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
   <div class="container mx-auto px-4 py-8">
-    <header class="mb-8 bg-white rounded-lg shadow p-6">
+    <header class="mb-8 card">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
           <h1 class="text-3xl font-bold text-gray-800 flex items-center">
@@ -22,11 +22,11 @@
         </div>
         <div class="flex items-center space-x-4">
           <div class="repo-selector">
-            <select id="repoSelect" class="form-select bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full">
+            <select id="repoSelect" class="form-select">
               <option value="">Select a repository</option>
             </select>
           </div>
-          <button id="refreshButton" class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full">
+          <button id="refreshButton" class="refresh-button">
             <i class="fas fa-sync-alt"></i>
           </button>
         </div>
@@ -35,7 +35,7 @@
     
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow p-6">
+      <div class="card stats-card">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
             <i class="fas fa-tasks text-xl"></i>
@@ -47,7 +47,7 @@
         </div>
       </div>
       
-      <div class="bg-white rounded-lg shadow p-6">
+      <div class="card stats-card success">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
             <i class="fas fa-check-circle text-xl"></i>
@@ -59,7 +59,7 @@
         </div>
       </div>
       
-      <div class="bg-white rounded-lg shadow p-6">
+      <div class="card stats-card warning">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
             <i class="fas fa-clock text-xl"></i>
@@ -74,12 +74,12 @@
 
     <!-- Charts Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow p-6">
+      <div class="card">
         <div class="flex items-center mb-4">
           <i class="fas fa-chart-pie text-blue-600 mr-2"></i>
           <h2 class="text-xl font-semibold text-gray-700">Workflow Status Distribution</h2>
         </div>
-        <div class="relative" style="height: 300px;">
+        <div class="chart-container">
           <div id="statusChartContainer" class="loading absolute inset-0">
             <div class="spinner"></div>
           </div>
@@ -87,12 +87,12 @@
         </div>
       </div>
     
-      <div class="bg-white rounded-lg shadow p-6">
+      <div class="card">
         <div class="flex items-center mb-4">
           <i class="fas fa-chart-line text-blue-600 mr-2"></i>
           <h2 class="text-xl font-semibold text-gray-700">Workflow Runs Timeline</h2>
         </div>
-        <div class="relative" style="height: 300px;">
+        <div class="chart-container">
           <div id="timelineChartContainer" class="loading absolute inset-0">
             <div class="spinner"></div>
           </div>
@@ -102,25 +102,25 @@
     </div>
 
     <!-- Recent Runs Table -->
-    <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+    <div class="table-container mb-8">
       <div class="px-6 py-4 border-b border-gray-200 flex items-center">
         <i class="fas fa-history text-blue-600 mr-2"></i>
         <h2 class="text-xl font-semibold text-gray-700">Recent Workflow Runs</h2>
       </div>
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+        <table class="table">
+          <thead>
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Workflow</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Started</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th>Workflow</th>
+              <th>Status</th>
+              <th>Started</th>
+              <th>Duration</th>
+              <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="recentRunsTable" class="bg-white divide-y divide-gray-200">
+          <tbody id="recentRunsTable">
             <tr>
-              <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+              <td colspan="5" class="text-center">
                 <div class="loading">
                   <div class="spinner"></div>
                 </div>
@@ -132,7 +132,7 @@
     </div>
 
     <!-- Workflow Details Section -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="card">
       <div class="flex items-center mb-4">
         <i class="fas fa-info-circle text-blue-600 mr-2"></i>
         <h2 class="text-xl font-semibold text-gray-700">Workflow Details</h2>
