@@ -637,7 +637,7 @@
     }
     
     html.dark .stats-card.total-runs {
-      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
       border-left: 4px solid #60a5fa;
     }
     
@@ -656,7 +656,7 @@
     }
     
     html.dark .stats-card.success-rate {
-      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
       border-left: 4px solid #34d399;
     }
     
@@ -675,7 +675,7 @@
     }
     
     html.dark .stats-card.last-run {
-      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
       border-left: 4px solid #fbbf24;
     }
     
@@ -706,18 +706,18 @@
     }
     
     html.dark .stats-card.total-runs .stat-value {
-      color: #93c5fd;
-      text-shadow: 0 0 15px rgba(147, 197, 253, 0.6);
+      color: #bfdbfe;
+      text-shadow: 0 0 15px rgba(191, 219, 254, 0.8);
     }
     
     html.dark .stats-card.success-rate .stat-value {
-      color: #6ee7b7;
-      text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
+      color: #a7f3d0;
+      text-shadow: 0 0 15px rgba(167, 243, 208, 0.8);
     }
     
     html.dark .stats-card.last-run .stat-value {
-      color: #fcd34d;
-      text-shadow: 0 0 15px rgba(252, 211, 77, 0.6);
+      color: #fef3c7;
+      text-shadow: 0 0 15px rgba(254, 243, 199, 0.8);
     }
     
     /* Enhanced icon backgrounds */
@@ -748,13 +748,39 @@
       color: #d97706;
     }
     
-    /* Enhanced stat titles */
-    .stats-card .stat-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #4b5563;
-      position: relative;
-      z-index: 2;
+    html.dark .stats-card.total-runs .icon-bg {
+      background-color: rgba(219, 234, 254, 0.3);
+      color: #bfdbfe;
+      box-shadow: 0 0 15px rgba(219, 234, 254, 0.4);
+    }
+    
+    html.dark .stats-card.success-rate .icon-bg {
+      background-color: rgba(167, 243, 208, 0.3);
+      color: #a7f3d0;
+      box-shadow: 0 0 15px rgba(167, 243, 208, 0.4);
+    }
+    
+    html.dark .stats-card.last-run .icon-bg {
+      background-color: rgba(254, 243, 199, 0.3);
+      color: #fef3c7;
+      box-shadow: 0 0 15px rgba(254, 243, 199, 0.4);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+    
+    /* Enhance stat title text for better visibility */
+    html.dark .stats-card .stat-title {
+      color: #f9fafb;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     /* Card hover effects */
@@ -772,58 +798,558 @@
     
     /* Enhance dark mode stats cards to match light mode brightness */
     html.dark .stats-card.total-runs {
-      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
       border-left: 4px solid #60a5fa;
     }
     
     html.dark .stats-card.success-rate {
-      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
       border-left: 4px solid #34d399;
     }
     
     html.dark .stats-card.last-run {
-      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
       border-left: 4px solid #fbbf24;
     }
     
     /* Brighter text colors for dark mode stats cards */
     html.dark .stats-card.total-runs .stat-value {
-      color: #93c5fd;
-      text-shadow: 0 0 15px rgba(147, 197, 253, 0.6);
+      color: #bfdbfe;
+      text-shadow: 0 0 15px rgba(191, 219, 254, 0.8);
     }
     
     html.dark .stats-card.success-rate .stat-value {
-      color: #6ee7b7;
-      text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
+      color: #a7f3d0;
+      text-shadow: 0 0 15px rgba(167, 243, 208, 0.8);
     }
     
     html.dark .stats-card.last-run .stat-value {
-      color: #fcd34d;
-      text-shadow: 0 0 15px rgba(252, 211, 77, 0.6);
+      color: #fef3c7;
+      text-shadow: 0 0 15px rgba(254, 243, 199, 0.8);
     }
     
     /* Enhance icon backgrounds for better visibility */
     html.dark .stats-card.total-runs .icon-bg {
-      background-color: rgba(147, 197, 253, 0.2);
-      color: #93c5fd;
-      box-shadow: 0 0 15px rgba(147, 197, 253, 0.3);
+      background-color: rgba(219, 234, 254, 0.3);
+      color: #bfdbfe;
+      box-shadow: 0 0 15px rgba(219, 234, 254, 0.4);
     }
     
     html.dark .stats-card.success-rate .icon-bg {
-      background-color: rgba(110, 231, 183, 0.2);
-      color: #6ee7b7;
-      box-shadow: 0 0 15px rgba(110, 231, 183, 0.3);
+      background-color: rgba(167, 243, 208, 0.3);
+      color: #a7f3d0;
+      box-shadow: 0 0 15px rgba(167, 243, 208, 0.4);
     }
     
     html.dark .stats-card.last-run .icon-bg {
-      background-color: rgba(252, 211, 77, 0.2);
-      color: #fcd34d;
-      box-shadow: 0 0 15px rgba(252, 211, 77, 0.3);
+      background-color: rgba(254, 243, 199, 0.3);
+      color: #fef3c7;
+      box-shadow: 0 0 15px rgba(254, 243, 199, 0.4);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
     }
     
     /* Enhance stat title text for better visibility */
     html.dark .stats-card .stat-title {
-      color: #f3f4f6;
+      color: #f9fafb;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Enhanced stats cards with better colors and gradients */
+    .stats-card {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    /* Apply gradient overlays to stats cards */
+    .stats-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 0 16px 16px 0;
+    }
+    
+    /* Custom styling for Total Workflow Runs card */
+    .stats-card.total-runs {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e6f2ff 100%);
+      border-left: 4px solid #3b82f6;
+    }
+    
+    .stats-card.total-runs::after {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.02) 0%, rgba(59, 130, 246, 0.12) 100%);
+    }
+    
+    html.dark .stats-card.total-runs {
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      border-left: 4px solid #60a5fa;
+    }
+    
+    html.dark .stats-card.total-runs::after {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(96, 165, 250, 0.15) 100%);
+    }
+    
+    /* Custom styling for Success Rate card */
+    .stats-card.success-rate {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-left: 4px solid #10b981;
+    }
+    
+    .stats-card.success-rate::after {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(16, 185, 129, 0.12) 100%);
+    }
+    
+    html.dark .stats-card.success-rate {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      border-left: 4px solid #34d399;
+    }
+    
+    html.dark .stats-card.success-rate::after {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(52, 211, 153, 0.15) 100%);
+    }
+    
+    /* Custom styling for Last Run card */
+    .stats-card.last-run {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-left: 4px solid #f59e0b;
+    }
+    
+    .stats-card.last-run::after {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.02) 0%, rgba(245, 158, 11, 0.12) 100%);
+    }
+    
+    html.dark .stats-card.last-run {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    html.dark .stats-card.last-run::after {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(251, 191, 36, 0.15) 100%);
+    }
+    
+    /* Enhanced styling for stat values */
+    .stats-card .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .stats-card.total-runs .stat-value {
+      color: #2563eb;
+    }
+    
+    .stats-card.success-rate .stat-value {
+      color: #059669;
+    }
+    
+    .stats-card.last-run .stat-value {
+      color: #d97706;
+    }
+    
+    html.dark .stats-card.total-runs .stat-value {
+      color: #bfdbfe;
+      text-shadow: 0 0 15px rgba(191, 219, 254, 0.8);
+    }
+    
+    html.dark .stats-card.success-rate .stat-value {
+      color: #a7f3d0;
+      text-shadow: 0 0 15px rgba(167, 243, 208, 0.8);
+    }
+    
+    html.dark .stats-card.last-run .stat-value {
+      color: #fef3c7;
+      text-shadow: 0 0 15px rgba(254, 243, 199, 0.8);
+    }
+    
+    /* Enhanced icon backgrounds */
+    .stats-card .icon-bg {
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .stats-card.total-runs .icon-bg {
+      background-color: rgba(59, 130, 246, 0.15);
+      color: #2563eb;
+    }
+    
+    .stats-card.success-rate .icon-bg {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+    
+    .stats-card.last-run .icon-bg {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+    }
+    
+    html.dark .stats-card.total-runs .icon-bg {
+      background-color: rgba(219, 234, 254, 0.3);
+      color: #bfdbfe;
+      box-shadow: 0 0 15px rgba(219, 234, 254, 0.4);
+    }
+    
+    html.dark .stats-card.success-rate .icon-bg {
+      background-color: rgba(167, 243, 208, 0.3);
+      color: #a7f3d0;
+      box-shadow: 0 0 15px rgba(167, 243, 208, 0.4);
+    }
+    
+    html.dark .stats-card.last-run .icon-bg {
+      background-color: rgba(254, 243, 199, 0.3);
+      color: #fef3c7;
+      box-shadow: 0 0 15px rgba(254, 243, 199, 0.4);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+    
+    /* Enhance stat title text for better visibility */
+    html.dark .stats-card .stat-title {
+      color: #f9fafb;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Card hover effects */
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stats-card:hover .icon-bg {
+      transform: scale(1.1);
+    }
+    
+    .stats-card:hover .stat-value {
+      transform: scale(1.05);
+    }
+    
+    /* Enhance dark mode stats cards to match light mode brightness */
+    html.dark .stats-card.total-runs {
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      border-left: 4px solid #60a5fa;
+    }
+    
+    html.dark .stats-card.success-rate {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      border-left: 4px solid #34d399;
+    }
+    
+    html.dark .stats-card.last-run {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    /* Brighter text colors for dark mode stats cards */
+    html.dark .stats-card.total-runs .stat-value {
+      color: #bfdbfe;
+      text-shadow: 0 0 15px rgba(191, 219, 254, 0.8);
+    }
+    
+    html.dark .stats-card.success-rate .stat-value {
+      color: #a7f3d0;
+      text-shadow: 0 0 15px rgba(167, 243, 208, 0.8);
+    }
+    
+    html.dark .stats-card.last-run .stat-value {
+      color: #fef3c7;
+      text-shadow: 0 0 15px rgba(254, 243, 199, 0.8);
+    }
+    
+    /* Enhance icon backgrounds for better visibility */
+    html.dark .stats-card.total-runs .icon-bg {
+      background-color: rgba(219, 234, 254, 0.3);
+      color: #bfdbfe;
+      box-shadow: 0 0 15px rgba(219, 234, 254, 0.4);
+    }
+    
+    html.dark .stats-card.success-rate .icon-bg {
+      background-color: rgba(167, 243, 208, 0.3);
+      color: #a7f3d0;
+      box-shadow: 0 0 15px rgba(167, 243, 208, 0.4);
+    }
+    
+    html.dark .stats-card.last-run .icon-bg {
+      background-color: rgba(254, 243, 199, 0.3);
+      color: #fef3c7;
+      box-shadow: 0 0 15px rgba(254, 243, 199, 0.4);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+    
+    /* Enhance stat title text for better visibility */
+    html.dark .stats-card .stat-title {
+      color: #f9fafb;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    html.dark .stats-card.total-runs .icon-bg {
+      background-color: rgba(219, 234, 254, 0.3);
+      color: #bfdbfe;
+      box-shadow: 0 0 15px rgba(219, 234, 254, 0.4);
+    }
+    
+    html.dark .stats-card.success-rate .icon-bg {
+      background-color: rgba(167, 243, 208, 0.3);
+      color: #a7f3d0;
+      box-shadow: 0 0 15px rgba(167, 243, 208, 0.4);
+    }
+    
+    html.dark .stats-card.last-run .icon-bg {
+      background-color: rgba(254, 243, 199, 0.3);
+      color: #fef3c7;
+      box-shadow: 0 0 15px rgba(254, 243, 199, 0.4);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+    
+    /* Enhance stat title text for better visibility */
+    html.dark .stats-card .stat-title {
+      color: #f9fafb;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Card hover effects */
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stats-card:hover .icon-bg {
+      transform: scale(1.1);
+    }
+    
+    .stats-card:hover .stat-value {
+      transform: scale(1.05);
+    }
+    
+    /* Enhanced stats cards with better colors and gradients */
+    .stats-card {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    /* Apply gradient overlays to stats cards */
+    .stats-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 0 16px 16px 0;
+    }
+    
+    /* Custom styling for Total Workflow Runs card */
+    .stats-card.total-runs {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e6f2ff 100%);
+      border-left: 4px solid #3b82f6;
+    }
+    
+    .stats-card.total-runs::after {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.02) 0%, rgba(59, 130, 246, 0.12) 100%);
+    }
+    
+    html.dark .stats-card.total-runs {
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      border-left: 4px solid #60a5fa;
+    }
+    
+    html.dark .stats-card.total-runs::after {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(96, 165, 250, 0.15) 100%);
+    }
+    
+    /* Custom styling for Success Rate card */
+    .stats-card.success-rate {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-left: 4px solid #10b981;
+    }
+    
+    .stats-card.success-rate::after {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(16, 185, 129, 0.12) 100%);
+    }
+    
+    html.dark .stats-card.success-rate {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      border-left: 4px solid #34d399;
+    }
+    
+    html.dark .stats-card.success-rate::after {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(52, 211, 153, 0.15) 100%);
+    }
+    
+    /* Custom styling for Last Run card */
+    .stats-card.last-run {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-left: 4px solid #f59e0b;
+    }
+    
+    .stats-card.last-run::after {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.02) 0%, rgba(245, 158, 11, 0.12) 100%);
+    }
+    
+    html.dark .stats-card.last-run {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    html.dark .stats-card.last-run::after {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(251, 191, 36, 0.15) 100%);
+    }
+    
+    /* Enhanced styling for stat values */
+    .stats-card .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .stats-card.total-runs .stat-value {
+      color: #2563eb;
+    }
+    
+    .stats-card.success-rate .stat-value {
+      color: #059669;
+    }
+    
+    .stats-card.last-run .stat-value {
+      color: #d97706;
+    }
+    
+    html.dark .stats-card.total-runs .stat-value {
+      color: #bfdbfe;
+      text-shadow: 0 0 15px rgba(191, 219, 254, 0.8);
+    }
+    
+    html.dark .stats-card.success-rate .stat-value {
+      color: #a7f3d0;
+      text-shadow: 0 0 15px rgba(167, 243, 208, 0.8);
+    }
+    
+    html.dark .stats-card.last-run .stat-value {
+      color: #fef3c7;
+      text-shadow: 0 0 15px rgba(254, 243, 199, 0.8);
+    }
+    
+    /* Enhanced icon backgrounds */
+    .stats-card .icon-bg {
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .stats-card.total-runs .icon-bg {
+      background-color: rgba(59, 130, 246, 0.15);
+      color: #2563eb;
+    }
+    
+    .stats-card.success-rate .icon-bg {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+    
+    .stats-card.last-run .icon-bg {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+    }
+    
+    html.dark .stats-card.total-runs .icon-bg {
+      background-color: rgba(219, 234, 254, 0.3);
+      color: #bfdbfe;
+      box-shadow: 0 0 15px rgba(219, 234, 254, 0.4);
+    }
+    
+    html.dark .stats-card.success-rate .icon-bg {
+      background-color: rgba(167, 243, 208, 0.3);
+      color: #a7f3d0;
+      box-shadow: 0 0 15px rgba(167, 243, 208, 0.4);
+    }
+    
+    html.dark .stats-card.last-run .icon-bg {
+      background-color: rgba(254, 243, 199, 0.3);
+      color: #fef3c7;
+      box-shadow: 0 0 15px rgba(254, 243, 199, 0.4);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+    
+    /* Enhance stat title text for better visibility */
+    html.dark .stats-card .stat-title {
+      color: #f9fafb;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
