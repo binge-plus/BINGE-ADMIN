@@ -19,6 +19,8 @@
       --text-color: #1f2937;
       --bg-gradient-from: #f5f7fa;
       --bg-gradient-to: #e4e9f2;
+      --border-color: rgba(229, 231, 235, 1);
+      --table-hover-bg: rgba(249, 250, 251, 1);
     }
     
     html.dark {
@@ -28,13 +30,18 @@
       --text-color: #f3f4f6;
       --bg-gradient-from: #111827;
       --bg-gradient-to: #1f2937;
+      --border-color: rgba(75, 85, 99, 0.5);
+      --table-hover-bg: rgba(31, 41, 55, 0.7);
+    }
+    
+    * {
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     }
     
     body {
       background: linear-gradient(135deg, var(--bg-gradient-from) 0%, var(--bg-gradient-to) 100%);
       min-height: 100vh;
       color: var(--text-color);
-      transition: background-color 0.3s ease;
     }
     
     .card {
@@ -57,6 +64,7 @@
     .stats-card {
       position: relative;
       overflow: hidden;
+      background-color: var(--card-bg);
     }
     
     .stats-card::before {
@@ -80,10 +88,12 @@
       padding: 0.35em 0.65em;
       border-radius: 20px;
       font-size: 0.75em;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: capitalize;
       display: inline-block;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
     }
     
     .status-success {
@@ -125,6 +135,8 @@
       position: relative;
       height: 250px;
       width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
     }
     
     .loading {
@@ -157,7 +169,7 @@
       padding: 0.5rem 2.5rem 0.5rem 1rem;
       border-radius: 8px;
       background-color: var(--card-bg);
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border-color);
       color: var(--text-color);
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
       appearance: none;
@@ -202,13 +214,13 @@
       font-weight: 600;
       text-align: left;
       color: var(--text-color);
-      border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+      border-bottom: 1px solid var(--border-color);
     }
     
     .table td {
       padding: 0.75rem 1.5rem;
       vertical-align: middle;
-      border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+      border-bottom: 1px solid var(--border-color);
       color: var(--text-color);
     }
     
@@ -217,7 +229,7 @@
     }
     
     .table tbody tr:hover {
-      background-color: rgba(249, 250, 251, 0.05);
+      background-color: var(--table-hover-bg);
       transform: scale(1.01);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
@@ -259,12 +271,151 @@
     html.dark .text-gray-700, 
     html.dark .text-gray-800, 
     html.dark .text-gray-900 {
-      color: #f3f4f6;
+      color: #f3f4f6 !important;
     }
     
     html.dark .text-gray-500, 
     html.dark .text-gray-600 {
-      color: #d1d5db;
+      color: #d1d5db !important;
+    }
+    
+    /* Ensure icons are visible in dark mode */
+    html.dark .text-blue-600 {
+      color: #60a5fa !important;
+    }
+    
+    html.dark .text-green-600 {
+      color: #34d399 !important;
+    }
+    
+    html.dark .text-purple-600 {
+      color: #a78bfa !important;
+    }
+    
+    /* Fix background colors for icon containers in dark mode */
+    html.dark .bg-blue-100 {
+      background-color: rgba(96, 165, 250, 0.2) !important;
+    }
+    
+    html.dark .bg-green-100 {
+      background-color: rgba(52, 211, 153, 0.2) !important;
+    }
+    
+    html.dark .bg-purple-100 {
+      background-color: rgba(167, 139, 250, 0.2) !important;
+    }
+    
+    /* Fix table header in dark mode */
+    html.dark thead th {
+      background-color: rgba(31, 41, 55, 0.8) !important;
+      color: #f3f4f6 !important;
+      border-bottom-color: rgba(75, 85, 99, 0.5) !important;
+    }
+    
+    /* Fix border colors in dark mode */
+    html.dark .border-gray-200 {
+      border-color: rgba(75, 85, 99, 0.5) !important;
+    }
+    
+    /* More contrast for elements that need it */
+    html.dark select option {
+      background-color: #1f2937;
+      color: #f3f4f6;
+    }
+    
+    /* Improved glassmorphism for dark mode */
+    html.dark .glassmorphism {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(75, 85, 99, 0.2);
+    }
+    
+    /* Fix workflow stats cards in dark mode */
+    html.dark #workflowStatsContainer > div {
+      background-color: #1f2937 !important;
+      border-color: rgba(75, 85, 99, 0.5) !important;
+    }
+    
+    /* Fix table cell text colors in dark mode */
+    html.dark .table td .text-gray-900 {
+      color: #f3f4f6 !important;
+    }
+    
+    html.dark .table td .text-gray-500 {
+      color: #d1d5db !important;
+    }
+    
+    /* Fix links in dark mode */
+    html.dark .table td a.text-blue-600 {
+      color: #60a5fa !important;
+    }
+    
+    html.dark .table td a.text-blue-600:hover {
+      color: #93c5fd !important;
+    }
+    
+    /* Improved chart canvas visibility in dark mode */
+    html.dark canvas {
+      filter: brightness(1.1);
+    }
+    
+    /* Fix repo info text in dark mode */
+    html.dark #repoInfo {
+      color: #d1d5db !important;
+    }
+    
+    /* Enhance 3D effect for dark mode cards */
+    html.dark .stats-card::before {
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+    }
+    
+    /* Fix dropdown text in dark mode */
+    html.dark .repo-selector select {
+      color: #f3f4f6;
+      border-color: rgba(75, 85, 99, 0.5);
+      background-color: #1f2937;
+    }
+    
+    /* Make charts more vibrant in dark mode */
+    html.dark .chart-container {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    
+    /* Enhanced stats cards for dark mode */
+    html.dark .stats-card {
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.45), 0 15px 10px -5px rgba(0, 0, 0, 0.25);
+    }
+    
+    html.dark .stats-card:hover {
+      box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.55), 0 20px 15px -5px rgba(0, 0, 0, 0.35);
+    }
+    
+    /* Subtle dark mode glow for the cards */
+    html.dark #totalRuns,
+    html.dark #successRate,
+    html.dark #lastRun {
+      text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+    }
+    
+    /* Nice theme transition effect */
+    body, .card, .table, select, .status-badge, .table th, .table td {
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+    }
+    
+    /* Enhance focus states in dark mode */
+    html.dark *:focus {
+      outline-color: #60a5fa;
+    }
+    
+    /* Improve text clarity in dark mode */
+    html.dark .text-sm, 
+    html.dark .text-lg, 
+    html.dark .text-xl, 
+    html.dark .text-2xl {
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -637,6 +788,43 @@
         // Update workflow stats (using all runs for total counts)
         updateWorkflowStats(data.workflowStats);
       }
+      
+      // Add listener for dark mode changes to update UI accordingly
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class' && 
+              (mutation.target.classList.contains('dark') || 
+              mutation.oldValue?.includes('dark'))) {
+            
+            // If we have data, refresh the charts for the new theme
+            if (lastData) {
+              updateStatusChart(lastData);
+              updateTimelineChart(lastData);
+            }
+            
+            // Update table row styling for dark mode
+            document.querySelectorAll('.table tr').forEach(row => {
+              if (document.documentElement.classList.contains('dark')) {
+                row.querySelectorAll('.text-gray-900').forEach(el => {
+                  el.classList.remove('text-gray-900');
+                  el.classList.add('text-gray-100');
+                });
+              } else {
+                row.querySelectorAll('.text-gray-100').forEach(el => {
+                  el.classList.remove('text-gray-100');
+                  el.classList.add('text-gray-900');
+                });
+              }
+            });
+          }
+        });
+      });
+      
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'],
+        attributeOldValue: true 
+      });
       
       // Function to update the status chart
       function updateStatusChart(data) {
