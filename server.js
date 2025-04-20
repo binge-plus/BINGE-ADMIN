@@ -15,6 +15,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3001;
+const ip = process.env.IP || 'localhost';
 
 // GitHub configuration - from environment variables
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -226,7 +227,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`GitHub Actions monitoring dashboard running at http://localhost:${port}`);
+  console.log(`GitHub Actions monitoring dashboard running at http://${ip}:${port}`);
 });
 
 // http://localhost:${port}
