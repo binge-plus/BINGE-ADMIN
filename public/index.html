@@ -1182,29 +1182,20 @@
       padding-right: 1.5rem;
     }
     
-    /* Fix white background in table header row */
-    .table thead tr {
-      background-color: #f9fafb;
-    }
-    
+    /* Fix white background in table header row - DARK MODE ONLY */
     html.dark .table thead tr {
       background-color: #1e293b;
     }
     
-    /* Ensure table header text is visible */
-    .table th {
-      color: #1f2937;
-      background-color: #f9fafb;
-    }
-    
+    /* Override table header styles for dark mode only */
     html.dark .table th {
-      color: #e5e7eb;
-      background-color: #1e293b;
-      border-color: rgba(75, 85, 99, 0.4);
+      color: #e5e7eb !important;
+      background-color: #1e293b !important;
+      border-color: rgba(75, 85, 99, 0.4) !important;
     }
     
-    /* Fix table row styles for dark mode */
-    html.dark .table tr {
+    /* Fix table row styles for dark mode only */
+    html.dark .table tbody tr {
       border-bottom: 1px solid rgba(75, 85, 99, 0.4);
       background-color: #0f172a;
     }
