@@ -637,7 +637,7 @@
     }
     
     html.dark .stats-card.total-runs {
-      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
       border-left: 4px solid #60a5fa;
     }
     
@@ -656,7 +656,7 @@
     }
     
     html.dark .stats-card.success-rate {
-      background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
       border-left: 4px solid #34d399;
     }
     
@@ -675,7 +675,7 @@
     }
     
     html.dark .stats-card.last-run {
-      background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
       border-left: 4px solid #fbbf24;
     }
     
@@ -706,18 +706,18 @@
     }
     
     html.dark .stats-card.total-runs .stat-value {
-      color: #60a5fa;
-      text-shadow: 0 0 15px rgba(96, 165, 250, 0.4);
+      color: #93c5fd;
+      text-shadow: 0 0 15px rgba(147, 197, 253, 0.6);
     }
     
     html.dark .stats-card.success-rate .stat-value {
-      color: #34d399;
-      text-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+      color: #6ee7b7;
+      text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
     }
     
     html.dark .stats-card.last-run .stat-value {
-      color: #fbbf24;
-      text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+      color: #fcd34d;
+      text-shadow: 0 0 15px rgba(252, 211, 77, 0.6);
     }
     
     /* Enhanced icon backgrounds */
@@ -748,21 +748,6 @@
       color: #d97706;
     }
     
-    html.dark .stats-card.total-runs .icon-bg {
-      background-color: rgba(96, 165, 250, 0.15);
-      color: #60a5fa;
-    }
-    
-    html.dark .stats-card.success-rate .icon-bg {
-      background-color: rgba(52, 211, 153, 0.15);
-      color: #34d399;
-    }
-    
-    html.dark .stats-card.last-run .icon-bg {
-      background-color: rgba(251, 191, 36, 0.15);
-      color: #fbbf24;
-    }
-    
     /* Enhanced stat titles */
     .stats-card .stat-title {
       font-size: 1rem;
@@ -770,10 +755,6 @@
       color: #4b5563;
       position: relative;
       z-index: 2;
-    }
-    
-    html.dark .stats-card .stat-title {
-      color: #e5e7eb;
     }
     
     /* Card hover effects */
@@ -787,6 +768,157 @@
     
     .stats-card:hover .stat-value {
       transform: scale(1.05);
+    }
+    
+    /* Enhance dark mode stats cards to match light mode brightness */
+    html.dark .stats-card.total-runs {
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+      border-left: 4px solid #60a5fa;
+    }
+    
+    html.dark .stats-card.success-rate {
+      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+      border-left: 4px solid #34d399;
+    }
+    
+    html.dark .stats-card.last-run {
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    /* Brighter text colors for dark mode stats cards */
+    html.dark .stats-card.total-runs .stat-value {
+      color: #93c5fd;
+      text-shadow: 0 0 15px rgba(147, 197, 253, 0.6);
+    }
+    
+    html.dark .stats-card.success-rate .stat-value {
+      color: #6ee7b7;
+      text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
+    }
+    
+    html.dark .stats-card.last-run .stat-value {
+      color: #fcd34d;
+      text-shadow: 0 0 15px rgba(252, 211, 77, 0.6);
+    }
+    
+    /* Enhance icon backgrounds for better visibility */
+    html.dark .stats-card.total-runs .icon-bg {
+      background-color: rgba(147, 197, 253, 0.2);
+      color: #93c5fd;
+      box-shadow: 0 0 15px rgba(147, 197, 253, 0.3);
+    }
+    
+    html.dark .stats-card.success-rate .icon-bg {
+      background-color: rgba(110, 231, 183, 0.2);
+      color: #6ee7b7;
+      box-shadow: 0 0 15px rgba(110, 231, 183, 0.3);
+    }
+    
+    html.dark .stats-card.last-run .icon-bg {
+      background-color: rgba(252, 211, 77, 0.2);
+      color: #fcd34d;
+      box-shadow: 0 0 15px rgba(252, 211, 77, 0.3);
+    }
+    
+    /* Enhance stat title text for better visibility */
+    html.dark .stats-card .stat-title {
+      color: #f3f4f6;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Completely redesign the table in dark mode to match the chart cards */
+    html.dark .table-container {
+      background-color: #111827;
+      border: 1px solid rgba(75, 85, 99, 0.3);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    
+    html.dark .table th {
+      background-color: #0f172a !important;
+      color: #e5e7eb !important;
+      border-bottom: 2px solid rgba(75, 85, 99, 0.4) !important;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 1rem 1.5rem;
+    }
+    
+    html.dark .table td {
+      background-color: #1f2937;
+      border-bottom: 1px solid rgba(75, 85, 99, 0.2);
+      color: #f3f4f6 !important;
+    }
+    
+    html.dark .table tbody tr:nth-child(even) td {
+      background-color: #1a1f2e;
+    }
+    
+    html.dark .table tbody tr:nth-child(odd) td {
+      background-color: #1f2937;
+    }
+    
+    html.dark .table tbody tr:hover td {
+      background-color: #2d3748 !important;
+    }
+    
+    /* Improve workflow name text in table */
+    html.dark .table td div.text-sm.font-medium {
+      color: #f3f4f6 !important;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Improve date and duration text */
+    html.dark .table td .text-sm.text-gray-500 {
+      color: #d1d5db !important;
+    }
+    
+    /* Enhance view button */
+    html.dark .table td a {
+      color: #60a5fa !important;
+      background-color: rgba(37, 99, 235, 0.2);
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      text-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+    }
+    
+    html.dark .table td a:hover {
+      background-color: rgba(37, 99, 235, 0.3);
+      color: #93c5fd !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Fix table header text color */
+    html.dark .border-b.border-gray-200 {
+      border-color: rgba(75, 85, 99, 0.3) !important;
+      background-color: #0f172a;
+    }
+    
+    html.dark .border-b.border-gray-200 h2 {
+      color: #f3f4f6 !important;
+    }
+    
+    /* Improve dark mode glassmorphism for better contrast */
+    html.dark .glassmorphism {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(75, 85, 99, 0.2);
+    }
+    
+    /* Add subtle pulsing glow to dark mode stats values */
+    @keyframes pulse-glow {
+      0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+      50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
+      100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+    }
+    
+    html.dark .stat-value {
+      animation: pulse-glow 3s infinite ease-in-out;
     }
   </style>
 </head>
@@ -1154,34 +1286,42 @@
         recentRunsTable.innerHTML = '';
         
         const last10Runs = data.recentRuns.slice(0, 10);
-        last10Runs.forEach(run => {
+        last10Runs.forEach((run, index) => {
           const row = document.createElement('tr');
           row.className = 'transition-all duration-200';
-          row.innerHTML = `
-            <td class="px-6 py-4 whitespace-nowrap">
+          
+          // Apply special styling for dark mode tables
+          const isDark = document.documentElement.classList.contains('dark');
+          const evenRow = index % 2 === 0;
+          
+          // Create table cells
+          const cells = [`
+            <td class="px-6 py-4 whitespace-nowrap ${isDark ? (evenRow ? 'bg-gray-800' : 'bg-gray-900') : ''}">
               <div class="text-sm font-medium text-gray-900">${run.name}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap ${isDark ? (evenRow ? 'bg-gray-800' : 'bg-gray-900') : ''}">
               <span class="status-badge ${getStatusBadgeClass(run.status, run.conclusion)}">
                 ${getStatusDisplay(run.status, run.conclusion)}
               </span>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap ${isDark ? (evenRow ? 'bg-gray-800' : 'bg-gray-900') : ''}">
               <div class="text-sm text-gray-500" title="${formatDate(run.created_at)}">
                 ${new Date(run.created_at).toLocaleDateString()}
               </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap ${isDark ? (evenRow ? 'bg-gray-800' : 'bg-gray-900') : ''}">
               <div class="text-sm text-gray-500">
                 ${calculateDuration(run.created_at, run.updated_at)}
               </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap ${isDark ? (evenRow ? 'bg-gray-800' : 'bg-gray-900') : ''}">
               <a href="${run.url}" target="_blank" class="text-sm text-blue-600 hover:text-blue-900 transition transform hover:scale-105">
                 View
               </a>
             </td>
-          `;
+          `];
+          
+          row.innerHTML = cells.join('');
           recentRunsTable.appendChild(row);
         });
         
