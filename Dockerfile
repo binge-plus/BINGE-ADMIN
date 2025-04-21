@@ -15,7 +15,7 @@ ENV IP=0.0.0.0
 ENV NODE_ENV=production
 
 # Expose the port the app will run on
-EXPOSE 3000
+EXPOSE 3002
 
 # Command to run the application
 CMD ["node", "server.js"] 
