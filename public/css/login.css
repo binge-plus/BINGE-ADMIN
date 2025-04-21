@@ -5,34 +5,117 @@
     font-family: 'Inter', sans-serif;
 }
 
+:root {
+    --primary-color: #e50914;
+    --primary-hover: #b91c1c;
+    --primary-light: rgba(229, 9, 20, 0.1);
+}
+
 body[theme="light"] {
-    --bg-color: #f9fafb;
+    --bg-color: #f0f2f5;
     --card-bg: #ffffff;
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     --text-primary: #111827;
     --text-secondary: #6b7280;
     --input-border: #e5e7eb;
-    --input-bg: #ffffff;
-    --button-bg: #e50914;
-    --button-hover: #b91c1c;
+    --input-bg: #f9fafb;
+    --button-bg: var(--primary-color);
+    --button-hover: var(--primary-hover);
     --button-text: #ffffff;
+    --shape-color-1: rgba(229, 9, 20, 0.1);
+    --shape-color-2: rgba(59, 130, 246, 0.1);
 }
 
 body[theme="dark"] {
     --bg-color: #111827;
     --card-bg: #1f2937;
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     --text-primary: #f9fafb;
     --text-secondary: #9ca3af;
     --input-border: #374151;
-    --input-bg: #1f2937;
-    --button-bg: #e50914;
-    --button-hover: #b91c1c;
+    --input-bg: #111827;
+    --button-bg: var(--primary-color);
+    --button-hover: var(--primary-hover);
     --button-text: #ffffff;
+    --shape-color-1: rgba(229, 9, 20, 0.2);
+    --shape-color-2: rgba(59, 130, 246, 0.2);
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Background effects */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+.shape-1 {
+    bottom: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: var(--shape-color-1);
+    animation: float 15s ease-in-out infinite alternate;
+}
+
+.shape-2 {
+    top: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: var(--shape-color-2);
+    animation: float 20s ease-in-out infinite alternate-reverse;
+}
+
+.shape-3 {
+    top: 40%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    background: var(--shape-color-2);
+    opacity: 0.5;
+    animation: float 18s ease-in-out infinite alternate;
+}
+
+.shape-4 {
+    bottom: 30%;
+    left: 10%;
+    width: 250px;
+    height: 250px;
+    background: var(--shape-color-1);
+    opacity: 0.7;
+    animation: float 12s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        transform: translateY(50px) scale(1.1);
+    }
 }
 
 .min-h-screen {
@@ -41,27 +124,73 @@ body {
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    position: relative;
+    z-index: 1;
 }
 
 .login-container {
     width: 100%;
-    max-width: 28rem;
+    max-width: 400px;
+    perspective: 1000px;
 }
 
 .card {
     background-color: var(--card-bg);
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
     overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+}
+
+/* Add glass morphism effect */
+.card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1rem;
+    z-index: -1;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+.logo {
+    background: var(--primary-color);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    box-shadow: 0 10px 20px rgba(229, 9, 20, 0.2);
+    transform-style: preserve-3d;
+    transform: translateZ(20px);
 }
 
 .card-header {
-    padding: 1.5rem 1.5rem 0;
+    padding: 1.5rem 2rem 0;
+    text-align: center;
+    transform-style: preserve-3d;
+    transform: translateZ(10px);
 }
 
 .card-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.5rem;
@@ -69,30 +198,34 @@ body {
 
 .card-description {
     color: var(--text-secondary);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 .card-content {
-    padding: 1.5rem;
+    padding: 1.5rem 2rem 2rem;
+    transform-style: preserve-3d;
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    transform-style: preserve-3d;
+    transform: translateZ(5px);
 }
 
 .form-group label {
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-left: 0.25rem;
 }
 
 .password-header {
@@ -101,44 +234,81 @@ body {
     align-items: center;
 }
 
+.input-container {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
 .input-field {
-    padding: 0.625rem;
+    padding: 0.75rem 1rem;
     border: 1px solid var(--input-border);
-    border-radius: 0.375rem;
+    border-radius: 0.75rem;
     background-color: var(--input-bg);
     color: var(--text-primary);
-    font-size: 0.875rem;
+    font-size: 1rem;
     width: 100%;
-    transition: border-color 0.15s ease;
+    transition: all 0.3s ease;
 }
 
 .input-field:focus {
     outline: none;
     border-color: var(--button-bg);
-    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.1);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    transform: translateY(-2px);
 }
 
 .submit-button {
     width: 100%;
-    padding: 0.625rem 1.25rem;
+    padding: 0.75rem 1.5rem;
     background-color: var(--button-bg);
     color: var(--button-text);
     border: none;
-    border-radius: 0.375rem;
-    font-weight: 500;
-    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(229, 9, 20, 0.2);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transform: translateZ(15px);
 }
 
 .submit-button:hover {
     background-color: var(--button-hover);
+    transform: translateY(-2px) translateZ(15px);
+    box-shadow: 0 6px 10px rgba(229, 9, 20, 0.3);
+}
+
+.submit-button:active {
+    transform: translateY(0) translateZ(15px);
+    box-shadow: 0 2px 4px rgba(229, 9, 20, 0.2);
 }
 
 .submit-button:focus {
     outline: none;
-    box-shadow: 0 0 0 2px var(--bg-color), 
-                0 0 0 4px var(--button-bg);
+}
+
+.submit-button span {
+    position: relative;
+    z-index: 1;
+}
+
+.submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 100%);
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.submit-button:hover::before {
+    transform: translateY(0);
 }
 
 /* Error message styling */
@@ -155,8 +325,10 @@ body {
 
 .flash {
     padding: 0.75rem 1rem;
-    border-radius: 0.375rem;
+    border-radius: 0.75rem;
     margin-bottom: 0.5rem;
+    transform-style: preserve-3d;
+    transform: translateZ(5px);
 }
 
 .flash-error {
@@ -171,10 +343,17 @@ body {
     border: 1px solid #bbf7d0;
 }
 
-footer {
-    margin-top: auto;
-    text-align: center;
-    padding: 1rem;
-    background-color: var(--card-bg);
-    border-top: 1px solid var(--input-border);
-} 
+/* Responsive styles */
+@media (max-width: 640px) {
+    .card {
+        margin: 0 1rem;
+    }
+    
+    .card-header {
+        padding: 1.5rem 1.5rem 0;
+    }
+    
+    .card-content {
+        padding: 1.5rem;
+    }
+}

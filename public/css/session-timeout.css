@@ -1,0 +1,97 @@
+/* Session Timeout Styles */
+#session-timeout-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+}
+
+.timeout-modal {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    animation: slide-up 0.3s ease-out;
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeout-modal h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.timeout-modal p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.timeout-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.timeout-actions button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#session-stay-active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#session-stay-active:hover {
+    background-color: #3e8e41;
+}
+
+#session-logout {
+    background-color: #f44336;
+    color: white;
+}
+
+#session-logout:hover {
+    background-color: #d32f2f;
+}
+
+/* Dark theme support */
+body[theme="dark"] #session-timeout-warning .timeout-modal {
+    background-color: #2d3748;
+    border: 1px solid #4a5568;
+}
+
+body[theme="dark"] #session-timeout-warning .timeout-modal h3 {
+    color: #f7fafc;
+}
+
+body[theme="dark"] #session-timeout-warning .timeout-modal p {
+    color: #e2e8f0;
+} 

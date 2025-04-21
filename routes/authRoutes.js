@@ -2,8 +2,21 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
+// Authentication middleware
+const isAuthenticated = (req, res, next) => {
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+};
+
 // Login page
 router.get('/login', (req, res) => {
+    // If already logged in, redirect to home
+    if (req.session.user) {
+        return res.redirect('/');
+    }
     res.sendFile(path.join(__dirname, '../views/login.html'));
 });
 
@@ -13,7 +26,9 @@ router.post('/login', (req, res) => {
     
     if (username === process.env.ADMIN_USERNAME && 
         password === process.env.ADMIN_PASSWORD) {
-        req.session.isAuthenticated = true;
+        // Store user info and activity timestamp
+        req.session.user = { username };
+        req.session.lastActivity = Date.now();
         req.flash('success_msg', 'Login successful!');
         res.redirect('/');
     } else {
@@ -28,8 +43,19 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
-// Home page
-router.get('/', (req, res) => {
+// Session timeout check API endpoint
+router.get('/api/check-session', (req, res) => {
+    if (!req.session.user) {
+        return res.json({ valid: false });
+    }
+    
+    // Update last activity timestamp
+    req.session.lastActivity = Date.now();
+    return res.json({ valid: true });
+});
+
+// Home page - protected route
+router.get('/', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../views/admin.html'));
 });
 
