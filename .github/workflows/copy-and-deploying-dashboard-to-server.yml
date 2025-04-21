@@ -89,7 +89,7 @@ jobs:
           script: |
             cd /var/www/html/binge-admin/admin-dashboard
             chmod +x start_nodemon_binge-admin_dashboard.sh
-            ./start_nodemon_admin_binge-dashboard.sh  
+            ./start_nodemon_binge-admin_dashboard.sh 
  
       - name: Restart Apache2
         uses: appleboy/ssh-action@master
