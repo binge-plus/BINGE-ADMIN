@@ -36,4 +36,4 @@ app.get('/movies', (req, res) => {
 app.use('/public', express.static('public'));
 
 const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
+app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`)); 

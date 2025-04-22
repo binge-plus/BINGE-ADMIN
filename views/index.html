@@ -6,18 +6,26 @@
     <title>Add Movie - Binge+ Admin Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="public/css/styles.css" rel="stylesheet" />
+    <link href="/css/enhanced-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
-<body theme="light">
+<body>
+    <!-- Animated Background Elements -->
+    <div class="bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+    
     <div class="container">
-        <div class="back-link">
+        <div class="back-link animate__animated animate__fadeInLeft">
             <a href="/index.html" class="link-primary">
                 <i class="ri-arrow-left-line"></i>
                 Back to Home Page
             </a>
         </div>
 
-        <form id="movieForm" class="form-container" action="/movie" method="post">
+        <form id="movieForm" class="form-container animate__animated animate__fadeInUp" action="/movies" method="post">
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title">Add New Movie</h1>
@@ -44,7 +52,7 @@
 
                         <div class="form-group">
                             <label for="details">Description</label>
-                            <input id="details" name="details" placeholder="Enter a detailed description of the movie" class="input-field"></input>
+                            <textarea id="details" name="details" placeholder="Enter a detailed description of the movie" class="input-field textarea-field"></textarea>
                         </div>
 
                         <div class="grid-3">
@@ -59,8 +67,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="quality">Available Quality</label>
-                                <input type="text" id="quality" name="quality" placeholder="e.g. HD, 4K, 1080p" class="input-field">
+                                <label for="Quality">Available Quality</label>
+                                <input type="text" id="Quality" name="Quality" placeholder="e.g. HD, 4K, 1080p" class="input-field">
                             </div>
                         </div>
 
@@ -129,13 +137,16 @@
 
                 <div class="card-footer">
                     <button type="button" class="button-secondary">Cancel</button>
-                    <button type="submit" class="button-primary">Save Movie</button>
+                    <button type="submit" class="button-primary">
+                        <span class="button-text">Save Movie</span>
+                        <i class="ri-save-line"></i>
+                    </button>
                 </div>
             </div>
         </form>
     </div>
 
     <script src="/js/scripts.js"></script>
-    <script src="/js/movie.js"></script>
+    <script src="/js/movies.js"></script>
 </body>
 </html> 
