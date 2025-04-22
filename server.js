@@ -30,10 +30,10 @@ app.use('/series', seriesRoutes);
 
 // Add route handlers for the HTML pages
 app.get('/series', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.use('/public', express.static('public'));
 
 const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
+app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`)); 

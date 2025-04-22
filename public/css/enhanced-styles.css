@@ -1,0 +1,607 @@
+:root {
+    --primary: #e50914;
+    --primary-hover: #b91c1c;
+    --background: #131313;
+    --card-background: rgba(17, 17, 17, 0.8);
+    --text-primary: #f9fafb;
+    --text-secondary: #a2a7b9;
+    --border-color: #2a2a2a;
+    --input-background: rgba(31, 31, 31, 0.6);
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --glow-effect: 0 0 15px rgba(229, 9, 20, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    line-height: 1.5;
+    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    background-attachment: fixed;
+}
+
+/* Page background with subtle animation */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(125deg, rgba(229, 9, 20, 0.05) 0%, transparent 70%);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem;
+}
+
+.back-link {
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.back-link:hover {
+    transform: scale(1.02);
+}
+
+.link-primary {
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-shadow: 0 0 5px rgba(229, 9, 20, 0.3);
+    transition: all 0.3s ease;
+}
+
+.link-primary:hover {
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(229, 9, 20, 0.6);
+    transform: scale(1.05);
+}
+
+.link-primary i {
+    transition: transform 0.3s ease;
+}
+
+.link-primary:hover i {
+    transform: translateX(-3px);
+}
+
+.card {
+    background-color: var(--card-background);
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--card-shadow), var(--glow-effect);
+}
+
+.card-header {
+    padding: 1.5rem 1.5rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.card-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #f9fafb, #e50914);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+}
+
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #e50914, transparent);
+    transition: width 0.3s ease;
+}
+
+.card:hover .card-title::after {
+    width: 100%;
+}
+
+.card-description {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.card-content {
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.section {
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    position: relative;
+    padding-left: 12px;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.separator {
+    height: 1px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    margin: 1rem 0;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.form-group:hover label {
+    color: var(--primary);
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--input-background);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.input-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+.input-field:hover {
+    background-color: rgba(31, 31, 31, 0.8);
+}
+
+.textarea-field {
+    min-height: 100px;
+    resize: vertical;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--input-background);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.textarea-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+.textarea-field:hover {
+    background-color: rgba(31, 31, 31, 0.8);
+}
+
+.button-primary,
+.button-secondary,
+.button-outline {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.button-primary {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 6px rgba(229, 9, 20, 0.3);
+}
+
+.button-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(229, 9, 20, 0.4);
+}
+
+.button-secondary {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.button-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button-outline {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.button-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.card-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    position: relative;
+}
+
+.card-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(229, 9, 20, 0.3), transparent);
+}
+
+.cast-member,
+.episode-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.cast-member:hover,
+.episode-row:hover {
+    transform: translateY(-2px);
+}
+
+.remove-btn {
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.remove-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.episode-number {
+    width: 100px;
+}
+
+.episode-title {
+    flex: 1;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* CSS Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+/* Background Elements Animation */
+.bg-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(229, 9, 20, 0.1) 0%, rgba(229, 9, 20, 0.05) 50%, transparent 70%);
+    animation: float 20s infinite ease-in-out;
+    opacity: 0.4;
+}
+
+.circle-1 {
+    width: 500px;
+    height: 500px;
+    top: -100px;
+    right: -100px;
+    animation-delay: 0s;
+}
+
+.circle-2 {
+    width: 800px;
+    height: 800px;
+    bottom: -200px;
+    left: -200px;
+    animation-delay: -5s;
+}
+
+.circle-3 {
+    width: 350px;
+    height: 350px;
+    top: 30%;
+    right: 20%;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-20px) translateX(20px);
+    }
+    50% {
+        transform: translateY(10px) translateX(-10px);
+    }
+    75% {
+        transform: translateY(20px) translateX(10px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-top: 20px;
+    }
+    
+    .bg-circle {
+        opacity: 0.2;
+    }
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(25, 25, 25, 0.9);
+    border-left: 4px solid var(--primary);
+    color: var(--text-primary);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 350px;
+    backdrop-filter: blur(10px);
+    animation: slideIn 0.3s forwards;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-icon {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.notification-close:hover {
+    color: var(--text-primary);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification.success {
+    border-left-color: #10b981;
+}
+
+.notification.success .notification-icon {
+    color: #10b981;
+}
+
+.notification.error {
+    border-left-color: #ef4444;
+}
+
+.notification.error .notification-icon {
+    color: #ef4444;
+}
+
+#formStatus {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#formStatus.loading {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+#formStatus.loading::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .notification {
+        left: 20px;
+        right: 20px;
+        max-width: calc(100% - 40px);
+    }
+}
+
+/* Login page styles - removing since login page is no longer used */
+.login-card {
+    max-width: 500px;
+    margin: 80px auto;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card .card-footer {
+    justify-content: center;
+    padding-top: 0;
+    border-top: none;
+}
+
+.login-card .button-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+}
+
+.login-card .card-title {
+    text-align: center;
+    display: block;
+}
+
+.login-card .card-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.login-card .card-description {
+    text-align: center;
+    margin-bottom: 20px;
+} 

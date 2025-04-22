@@ -6,10 +6,28 @@
     <title>Add Series - Binge+ Admin Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="public/css/styles.css" rel="stylesheet" />
+    <link href="/css/enhanced-styles.css" rel="stylesheet" />
 </head>
-<body theme="light">
+<body>
+    <!-- Animated Background Elements -->
+    <div class="bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+    
     <div class="container">
+        <!-- Notification Container -->
+        <div id="notification" class="notification" style="display: none;">
+            <div class="notification-content">
+                <i class="ri-check-line notification-icon"></i>
+                <span id="notification-message">Series added successfully!</span>
+            </div>
+            <button class="notification-close" onclick="this.parentElement.style.display='none'">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+
         <div class="back-link">
             <a href="/index.html" class="link-primary">
                 <i class="ri-arrow-left-line"></i>
@@ -138,8 +156,11 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="button" class="button-secondary">Cancel</button>
-                    <button type="submit" class="button-primary">Save Series</button>
+                    <div id="formStatus"></div>
+                    <div>
+                        <button type="button" class="button-secondary">Cancel</button>
+                        <button type="submit" class="button-primary">Save Series</button>
+                    </div>
                 </div>
             </div>
         </form>

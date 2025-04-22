@@ -3,26 +3,20 @@ const router = express.Router();
 const Series = require('../models/Series');
 const path = require('path');
 
-// Middleware to check if user is authenticated
-const isAuthenticated = (req, res, next) => {
-    if (req.session.isAuthenticated) {
-        return next();
-    }
-    res.redirect('/login');
-};
-
 // Get series form page
-router.get('/', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/series.html'));
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
 // Handle series submission
-router.post('/', isAuthenticated, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
+        console.log('Received series data:', req.body);
+        
         const seriesData = {
             title: req.body.title,
             details: req.body.details,
-            Quality: req.body.Quality,
+            quality: req.body.quality,
             rating: parseFloat(req.body.rating),
             imageH: req.body.imageH,
             imageV: req.body.imageV,
@@ -31,16 +25,25 @@ router.post('/', isAuthenticated, async (req, res) => {
             genre: req.body.genre,
             director: req.body.director,
             trailer: req.body.trailer,
-            episodes: req.body.episodes
+            episodes: req.body.episodes || []
         };
 
-        const series = new Series(seriesData);
-        await series.save();
+        console.log('Processed series data:', seriesData);
         
-        res.redirect('/index.html');
+        const series = new Series(seriesData);
+        const savedSeries = await series.save();
+        
+        console.log('Series saved:', savedSeries);
+        
+        // Return JSON response
+        res.status(201).json({ 
+            success: true, 
+            message: 'Series added successfully',
+            series: savedSeries 
+        });
     } catch (error) {
         console.error('Error saving series:', error);
-        res.status(400).json({ message: error.message });
+        res.status(400).json({ success: false, message: error.message });
     }
 });
 
@@ -65,31 +68,6 @@ router.get('/api/series/:id', async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
-    }
-});
-
-// Add new series (protected route)
-router.post('/api/series', async (req, res) => {
-    const series = new Series({
-        title: req.body.title,
-        imageH: req.body.imageH,
-        imageV: req.body.imageV,
-        details: req.body.details,
-        Quality: req.body.Quality,
-        rating: req.body.rating,
-        releaseDate: req.body.releaseDate,
-        cast: req.body.cast,
-        genre: req.body.genre,
-        director: req.body.director,
-        trailer: req.body.trailer,
-        episodes: req.body.episodes
-    });
-
-    try {
-        const newSeries = await series.save();
-        res.status(201).json(newSeries);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
     }
 });
 

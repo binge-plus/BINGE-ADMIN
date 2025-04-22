@@ -20,7 +20,7 @@ const seriesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Quality: {
+    quality: {
         type: String,
         required: true
     },
