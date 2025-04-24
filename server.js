@@ -13,13 +13,7 @@ const __dirname = path.dirname(__filename);
 // Load environment variables
 dotenv.config();
 
-const app = express();
-const port = process.env.PORT || 3001;
-const ip = process.env.IP || 'localhost';
-
-// GitHub configuration - from environment variables
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_OWNER = process.env.GITHUB_OWNER;
+const app = express(); 
 
 // Check if environment variables are loaded
 if (!GITHUB_TOKEN || !GITHUB_OWNER) {
@@ -226,8 +220,13 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`GitHub Actions monitoring dashboard running at http://${ip}:${port}`);
-});
+// GitHub configuration - from environment variables
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER;
 
-// http://localhost:${port}
+const WORKFLOW_DASHBOARD_PORT = process.env.WORKFLOW_DASHBOARD_PORT;
+const IP = process.env.IP;
+
+app.listen(port, () => {
+  console.log(`GitHub Actions monitoring dashboard running at http://${IP}:${WORKFLOW_DASHBOARD_PORT}`);
+});
