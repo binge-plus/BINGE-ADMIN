@@ -406,4 +406,13 @@ body {
         justify-content: center;
         margin-top: 1rem;
     }
+}
+
+/* Remove custom search input styling */
+.header .input-group,
+.header #dashboard-search,
+.header #dashboard-search:focus {
+    width: auto;
+    max-width: none;
+    transition: none;
 } 

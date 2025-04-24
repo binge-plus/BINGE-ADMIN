@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Get search elements
-    const searchInput = document.querySelector('.input-group input');
-    const searchButton = document.querySelector('.input-group button');
+    // Get search elements from header
+    const searchInput = document.getElementById('dashboard-search');
+    const searchButton = document.getElementById('search-button');
     const dashboardCards = document.querySelectorAll('.dashboard-card');
 
     // Development Stage Prompt for links
