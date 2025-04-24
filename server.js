@@ -2,7 +2,7 @@
 import express from 'express';
 import axios from 'axios';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -11,9 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load environment variables
-dotenv.config();
-
-const app = express(); 
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER;
 
 // Check if environment variables are loaded
 if (!GITHUB_TOKEN || !GITHUB_OWNER) {
@@ -24,6 +23,8 @@ if (!GITHUB_TOKEN || !GITHUB_OWNER) {
 // Debugging environment variables
 console.log('GITHUB_OWNER:', GITHUB_OWNER);
 console.log('GITHUB_TOKEN:', GITHUB_TOKEN ? 'Token loaded' : 'Token missing');
+
+const app = express(); 
 
 // Serve static files
 app.use(express.static('public'));
@@ -220,13 +221,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// GitHub configuration - from environment variables
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_OWNER = process.env.GITHUB_OWNER;
-
 const WORKFLOW_DASHBOARD_PORT = process.env.WORKFLOW_DASHBOARD_PORT;
-const IP = process.env.IP;
+const IP = process.env.IP || 'localhost';
 
-app.listen(port, () => {
+app.listen(WORKFLOW_DASHBOARD_PORT, () => {
   console.log(`GitHub Actions monitoring dashboard running at http://${IP}:${WORKFLOW_DASHBOARD_PORT}`);
 });
