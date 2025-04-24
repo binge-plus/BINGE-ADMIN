@@ -53,4 +53,4 @@ app.use('/public', express.static('public'));
 
 const ADMIN_PAGE_PORT = process.env.ADMIN_PAGE_PORT
 const IP = process.env.IP || 'localhost';
-app.listen(PORT, () => console.log(`Server running on port http://${IP}:${ADMIN_PAGE_PORT}`)); 
+app.listen(ADMIN_PAGE_PORT, () => console.log(`Server running on port http://${IP}:${ADMIN_PAGE_PORT}`)); 
