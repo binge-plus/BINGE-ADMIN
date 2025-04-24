@@ -52,5 +52,5 @@ app.use('/', require('./routes/authRoutes'));
 app.use('/public', express.static('public'));
 
 const PORT = process.env.PORT;
-const IP = process.env.IP || 'localhost';
-app.listen(PORT, () => console.log(`Server running on port http://${IP}:${PORT}`)); 
+const ADMIN_PAGE_PORT = process.env.ADMIN_PAGE_PORT;
+app.listen(PORT, () => console.log(`Server running on port http://${ADMIN_PAGE_PORT}:${PORT}`)); 
