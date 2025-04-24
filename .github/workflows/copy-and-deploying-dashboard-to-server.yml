@@ -42,26 +42,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Configure AWS credentials
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: us-east-1
-
-      # Install Mozilla Sops
-      - name: Install Mozilla Sops Binary
-        uses: mdgreenwald/mozilla-sops-action@v1.4.1
-        with:
-          version: 'v3.7.3'
-
-      - name: Decrypt environment variables
+      - name: Create .env file from Secrets
         shell: bash
         run: |
-          sops --decrypt binge-admin-dashboard-env.enc > .env
-
-      - name: Copy decrypted env file to server
+          # Create .env file with strict permissions
+          touch .env
+          chmod 600 .env
+          echo "${{ secrets.ADMIN_SERVER_ENV }}" 
+          # Securely write secrets to .env without displaying content
+          printf '%s\n' "${{ secrets.ADMIN_SERVER_ENV }}" > .env
+          
+      - name: Copy env file to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.GCP_VM_HOST }}
@@ -69,6 +60,10 @@ jobs:
           key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
           source: ".env"
           target: "/var/www/html/binge-admin/admin-dashboard/"
+          
+      # Optional: Securely remove .env file after copying
+      - name: Remove local .env file
+        run: rm -f .env
 
       - name: Install node dependencies
         uses: appleboy/ssh-action@master
