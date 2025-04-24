@@ -4,7 +4,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 const movieRoutes = require('./routes/movies');
 
-const app = express();
+const app = express(); 
 
 // Connect to MongoDB
 connectDB();

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  binge-admin:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: binge-admin-container
+    ports:
+      - "3002:3002"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URL=${MONGODB_URL}
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - binge-network
+
+  # Optional: Add MongoDB service if needed
+  mongodb:
+    image: mongo:latest
+    container_name: binge-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - binge-network
+
+networks:
+  binge-network:
+    driver: bridge
+
+# Optional: Uncomment if using MongoDB volume
+volumes:
+  mongodb_data: 
