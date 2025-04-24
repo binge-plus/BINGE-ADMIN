@@ -1,0 +1,91 @@
+name: Copy files and Start Nodemon Service
+
+on:
+  push:
+    branches:
+      - Movies_DB
+jobs:
+  copy-files-to-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Dir github-actions-dashboard
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }} 
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            sudo mkdir -p /var/www/html/binge-admin/movies-database
+            sudo chown -R binge+:binge+ /var/www/html/binge-admin/movies-database
+ 
+      - name: Copy files to GCP VM
+        uses: appleboy/scp-action@master
+        with: 
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          source: "."
+          target: "/var/www/html/binge-admin/movies-database" 
+
+
+  # Start Nodemon Service for github-actions-dashboard
+  start_nodemon-monitoring-dashboard:
+    runs-on: ubuntu-latest
+    needs: copy-files-to-server 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create .env file from Secrets
+        shell: bash
+        run: |
+          # Create .env file with strict permissions
+          echo "${{ secrets.ADMIN_SERVER_ENV }}" > .env
+          
+      - name: Copy env file to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          source: ".env"
+          target: "/var/www/html/binge-admin/movies-database/"
+          
+      # Optional: Securely remove .env file after copying
+      - name: Remove local .env file
+        run: rm -f .env
+
+      - name: Install node dependencies
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html/binge-admin/movies-database
+            npm install
+          
+      - name: Start Nodemon
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html/binge-admin/movies-database
+            chmod +x start_nodemon_binge-admin_dashboard.sh
+            ./start_nodemon_binge-admin_dashboard.sh 
+ 
+      - name: Restart Apache2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
+          script: |
+            sudo systemctl restart apache2

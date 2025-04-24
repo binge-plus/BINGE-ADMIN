@@ -31,9 +31,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port http://localhost:${PORT}`);
+const MOVIES_DB_PORT = process.env.MOVIES_DB_PORT;
+const IP = process.env.IP || 'localhost';
+app.listen(MOVIES_DB_PORT, () => {
+    console.log(`Server running on port http://${IP}:${MOVIES_DB_PORT}`);
 });
-
-module.exports = app; 
