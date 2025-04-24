@@ -1,57 +1,53 @@
 const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
-    title: {
+    Title: {
         type: String,
         required: true
     },
-    details: {
+    Details: {
         type: String,
         required: true
     },
-    Quality: {
+    Description: {
         type: String,
         required: true
     },
-    rating: {
-        type: Number,
-        required: true
-    },
-    imageH: {
+    Rating: {
         type: String,
         required: true
     },
-    imageV: {
+    Image: {
         type: String,
         required: true
     },
-    releaseDate: {
-        type: Date,
+    Link: {
+        type: String,
         required: true
     },
-    cast: [{
+    Visit_Movie: {
+        type: String,
+        required: true
+    },
+    Trailer: {
+        type: String,
+        required: true
+    },
+    ReleaseDate: {
+        type: String,
+        required: true
+    },
+    Genre: {
+        type: String,
+        required: true
+    },
+    Director: {
+        type: String,
+        required: true
+    },
+    Cast: [{
         type: String
-    }],
-    genre: {
-        type: String,
-        required: true
-    },
-    director: {
-        type: String,
-        required: true
-    },
-    visitMovie: {
-        type: String,
-        required: true
-    },
-    trailer: {
-        type: String,
-        required: true
-    },
-    isMarvel: {
-        type: Boolean,
-        default: false
-    }
+    }]
 });
 
 module.exports = mongoose.model('Movie', movieSchema); 
