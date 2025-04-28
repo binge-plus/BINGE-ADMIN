@@ -72,13 +72,14 @@ jobs:
       - name: Remove local .env file
         run: rm -f .env
 
-      - name: Install node dependencies
+      - name: Install Node.js and npm
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.GCP_VM_HOST }}
           username: ${{ secrets.GCP_VM_USERNAME }}
           key: ${{ secrets.GCP_VM_PRIVATE_KEY }}
           script: |
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             cd /var/www/html/binge-admin/admin-dashboard
             npm install
           
