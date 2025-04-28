@@ -35,4 +35,4 @@ const MOVIES_DB_PORT = process.env.MOVIES_DB_PORT;
 const IP = process.env.IP || 'localhost';
 app.listen(MOVIES_DB_PORT, () => {
     console.log(`Server running on port http://${IP}:${MOVIES_DB_PORT}`);
-});
+}); 
