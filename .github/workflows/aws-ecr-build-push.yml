@@ -30,7 +30,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::975050300138:role/github-oidc-connect
-          session-name: github-oidc-connect 
+          role-session-name: github-oidc-connect 
           aws-region: us-east-1
       
       # Step 3: Login to Amazon ECR
