@@ -11,6 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+// Health check endpoint for AWS ECS
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 // Session configuration with 30-minute timeout
 app.use(session({
     secret: process.env.SECRET_KEY,
